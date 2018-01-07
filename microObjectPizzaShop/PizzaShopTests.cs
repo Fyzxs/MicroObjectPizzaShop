@@ -64,6 +64,20 @@ namespace MicroObjectPizzaShop
             //Assert
             val.String().Should().Be("$9.00");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvidePriceWithTopping()
+        {
+            //Arrange
+            IPizza initial = new Pizza();
+            IPizza subject = initial.AddTopping(new TextOf("SomeTopping"));
+
+            //Act
+            IText val = subject.Price();
+
+            //Assert
+            val.String().Should().Be("$9.90");
+        }
     }
     public interface IPizza
     {
@@ -89,6 +103,10 @@ namespace MicroObjectPizzaShop
             return new FormatText(Format, PizzaType, _topping);
         }
 
-        public IText Price() => new TextOf("$9.00");
+        public IText Price()
+        {
+            if (_topping.IsEmpty()) return new TextOf("$9.00");
+            return new TextOf("$9.90");
+        }
     }
 }
