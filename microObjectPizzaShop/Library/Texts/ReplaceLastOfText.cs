@@ -1,7 +1,8 @@
-﻿using System;
-using MicroObjectPizzaShop.Library.Texts;
+﻿using MicroObjectPizzaShop.Library.Texts;
+using System;
 
-namespace microObjectPizzaShop.Library.Texts {
+namespace microObjectPizzaShop.Library.Texts
+{
     public class ReplaceLastOfText : IText
     {
         private readonly IText _source;
@@ -22,6 +23,7 @@ namespace microObjectPizzaShop.Library.Texts {
 
             int place = source.LastIndexOf(target, StringComparison.Ordinal);
 
+            //TODO: Smelly - Make -1 mean something
             return place == -1
                 ? source
                 : source.Remove(place, target.Length).Insert(place, replace);

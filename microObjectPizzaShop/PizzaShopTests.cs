@@ -209,7 +209,7 @@ namespace MicroObjectPizzaShop
         }
 
         public Money Cost(Money pizzaCost) => pizzaCost % _percent;
-        public IText Name() => _name;
+        public IText Name() => _name;//TODO: Smelly - encapsulation violation
     }
 
     public interface ITopping
@@ -272,6 +272,7 @@ namespace MicroObjectPizzaShop
 
         public Money Cost(Money basePrice)
         {
+            //TODO: Smelly
             Money result = new Money(0);
             foreach (ITopping topping in _toppings)
             {

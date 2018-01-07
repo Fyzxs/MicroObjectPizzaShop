@@ -38,6 +38,7 @@ namespace microObjectPizzaShop.Pizza
 
         private bool ProcessedNoToppings(IWriteString item)
         {
+            //TODO: Smelly - Chain?
             if (!_toppings.Empty()) return false;
 
             item.Write(new FormatText(NoToppingsFormat, _type).String());
