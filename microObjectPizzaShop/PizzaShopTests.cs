@@ -10,9 +10,27 @@ namespace microObjectPizzaShop
         {
             IPizza pizza = new Pizza();
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldAddTopping()
+        {
+            //Arrange
+            IPizza pizza = new Pizza();
+
+            //Act
+            IPizza newPizza = pizza.AddTopping("SomeTopping");
+
+            //Assert
+        }
     }
 
-    public interface IPizza { }
+    public interface IPizza
+    {
+        IPizza AddTopping(string topping);
+    }
 
-    public class Pizza : IPizza { }
+    public class Pizza : IPizza
+    {
+        public IPizza AddTopping(string topping) => new Pizza();
+    }
 }
