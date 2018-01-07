@@ -14,13 +14,15 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza subject = new PersonalPizza();
+            IPizza pizza = new PersonalPizza();
+            IDescription actual = pizza.Description();
+            TestWriteText testWriteText = new TestWriteText();
 
             //Act
-            IDescription actual = subject.Description();
+            actual.Into(testWriteText);
 
             //Assert
-            actual.Value().String().Should().Be("Personal pizza");
+            testWriteText.AssertValueIs("Personal pizza");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -28,12 +30,15 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new PersonalPizza();
-            IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
+            IPizza pizza = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
+            IDescription actual = pizza.Description();
+            TestWriteText testWriteText = new TestWriteText();
+
             //Act
-            IDescription actual = subject.Description();
+            actual.Into(testWriteText);
 
             //Assert
-            actual.Value().String().Should().Be("Personal pizza with SomeTopping");
+            testWriteText.AssertValueIs("Personal pizza with SomeTopping");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -84,15 +89,17 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new PersonalPizza();
-            IPizza subject = initial
+            IPizza pizza = initial
                 .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
+            IDescription actual = pizza.Description();
+            TestWriteText testWriteText = new TestWriteText();
 
             //Act
-            IDescription actual = subject.Description();
+            actual.Into(testWriteText);
 
             //Assert
-            actual.Value().String().Should().Be("Personal pizza with SomeTopping and OtherTopping");
+            testWriteText.AssertValueIs("Personal pizza with SomeTopping and OtherTopping");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -100,16 +107,18 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new PersonalPizza();
-            IPizza subject = initial
+            IPizza pizza = initial
                 .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1))
                 .AddTopping(new Topping(new TextOf("Delicious"), .1));
+            IDescription actual = pizza.Description();
+            TestWriteText testWriteText = new TestWriteText();
 
             //Act
-            IDescription actual = subject.Description();
+            actual.Into(testWriteText);
 
             //Assert
-            actual.Value().String().Should().Be("Personal pizza with SomeTopping, OtherTopping and Delicious");
+            testWriteText.AssertValueIs("Personal pizza with SomeTopping, OtherTopping and Delicious");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -135,10 +144,10 @@ namespace MicroObjectPizzaShop
             IPizza subject = new FamilyPizza();
 
             //Act
-            IText val = subject.Price();
+            IText actual = subject.Price();
 
             //Assert
-            val.String().Should().Be("$18.00");
+            actual.String().Should().Be("$18.00");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -158,13 +167,16 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayFamilyDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza subject = new FamilyPizza();
+            IPizza pizza = new FamilyPizza();
+            IDescription subject = pizza.Description();
+
+            TestWriteText testWriteText = new TestWriteText();
 
             //Act
-            IDescription actual = subject.Description();
+            subject.Into(testWriteText);
 
             //Assert
-            actual.Value().String().Should().Be("Family pizza");
+            testWriteText.AssertValueIs("Family pizza");
         }
         [TestMethod, TestCategory("unit")]
         public void ShouldHaveImmutableToppings()
@@ -262,21 +274,48 @@ namespace MicroObjectPizzaShop
             _toppings = toppings;
         }
 
-        public IText Value()
+        public void Into(IWriteText item)
         {
-            if (_toppings.Empty()) return new FormatText(NoToppingsFormat, _type);
+            if (ProcessedNoToppings(item)) return;
+
+            ProcessToppingDescription(item);
+        }
+
+        private void ProcessToppingDescription(IWriteText item)
+        {
             List<IText> texts = new List<IText>
             {
                 _type,
                 _toppings.SentenceJoined()
             };
-            return new FormatText(MultipleToppingsFormat, texts.ToArray());
+            item.Write(new FormatText(MultipleToppingsFormat, texts.ToArray()).String());
         }
+
+        private bool ProcessedNoToppings(IWriteText item)
+        {
+            if (!_toppings.Empty()) return false;
+
+            item.Write(new FormatText(NoToppingsFormat, _type).String());
+            return true;
+        }
+    }
+
+    public interface IWriteText
+    {
+        void Write(string value);
+    }
+    public class TestWriteText : IWriteText
+    {
+        private string _value;
+
+        public void Write(string value) => _value = value;
+
+        public void AssertValueIs(string expected) => _value.Should().Be(expected);
     }
 
     public interface IDescription
     {
-        IText Value();
+        void Into(IWriteText item);
     }
 
     public class Toppings : IToppings
