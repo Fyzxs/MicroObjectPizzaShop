@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MicroObjectPizzaShop
 {
@@ -78,6 +80,20 @@ namespace MicroObjectPizzaShop
             //Assert
             val.String().Should().Be("$9.90");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvidePriceWithMultipleToppings()
+        {
+            //Arrange
+            IPizza initial = new Pizza();
+            IPizza subject = initial.AddTopping(new TextOf("SomeTopping")).AddTopping(new TextOf("OtherTopping"));
+
+            //Act
+            IText val = subject.Price();
+
+            //Assert
+            val.String().Should().Be("$10.80");
+        }
     }
     public interface IPizza
     {
@@ -91,22 +107,25 @@ namespace MicroObjectPizzaShop
         private static readonly IText PizzaType = new TextOf("Personal pizza");
         private static readonly IText Format = new TextOf("{0} with {1}");
 
-        private readonly IText _topping;
+        private readonly List<IText> _toppings;
 
-        public Pizza() : this(new EmptyText()) { }
-        private Pizza(IText topping) => _topping = topping;
+        public Pizza() : this(new List<IText>()) { }
+        private Pizza(List<IText> toppings) => _toppings = toppings;
 
-        public IPizza AddTopping(IText topping) => new Pizza(topping);
+        public IPizza AddTopping(IText topping)
+        {
+            _toppings.Add(topping);
+            return new Pizza(_toppings);
+        }
+
         public IText Description()
         {
-            if (_topping.IsEmpty()) return PizzaType;
-            return new FormatText(Format, PizzaType, _topping);
+            if (!_toppings.Any()) return PizzaType;
+            List<IText> texts = new List<IText> { PizzaType };
+            texts.AddRange(_toppings);
+            return new FormatText(Format, texts.ToArray());
         }
 
-        public IText Price()
-        {
-            if (_topping.IsEmpty()) return new TextOf("$9.00");
-            return new TextOf("$9.90");
-        }
+        public IText Price() => new TextOf(( 9 + _toppings.Count * .9 ).ToString("C"));
     }
 }
