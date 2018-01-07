@@ -1,0 +1,164 @@
+;-------------------------------------------------------------------------------
+; Editor Config for Premrea UWP
+;
+; This uses custom .NET Code Style Settings
+; https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+;
+; Explainations should be inline for each entry
+;-------------------------------------------------------------------------------
+
+; Top-most Editor Config File
+root = true 
+
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+trim_trailing_whitespace = true
+insert_final_newline = false;
+
+[*.cs]
+;-------------------------------------------------------------------------------
+; "This." and "Me." Qualification
+;-------------------------------------------------------------------------------
+; Fields
+dotnet_style_qualification_for_field = false:error
+; Properties
+dotnet_style_qualification_for_property = false:error
+; Methods
+dotnet_style_qualification_for_method = false:error
+; Event
+dotnet_style_qualification_for_event = false:error
+
+;-------------------------------------------------------------------------------
+; Language keywords vs framework type names for type references
+;-------------------------------------------------------------------------------
+; Locals, parameters, and members
+dotnet_style_predefined_type_for_locals_parameters_members:true:error
+; Member access expressions
+dotnet_style_predefined_type_for_member_access = true:error
+
+;-------------------------------------------------------------------------------
+; Expression-level Preferences
+;-------------------------------------------------------------------------------
+; Object Initializeers
+initializers = true:suggestion
+; Collection Initializers
+dotnet_style_collection_initializer = true:suggestion
+; Explicit tuple names
+dotnet_style_explicit_tuple_names = true:error
+; Coalescing expressions in "null" checking
+dotnet_style_coalesce_expression = true:error
+; Null propagation in "null" checking
+dotnet_style_null_propagation = true:error
+
+;-------------------------------------------------------------------------------
+; "var" and Explicit Types
+;-------------------------------------------------------------------------------
+; "var" for built-in types
+csharp_style_var_for_built_in_types = false:error
+; "var" when type is apparent
+csharp_style_var_when_type_is_apparent = false:error
+; "var" elsewhere
+csharp_style_var_elsewhere = false:error
+
+;-------------------------------------------------------------------------------
+; Expression-bodied Members
+;-------------------------------------------------------------------------------
+; Methods
+csharp_style_expression_bodied_methods = true:suggestion
+; Constructors
+csharp_style_expression_bodied_constructors = true:warming
+; Operators
+csharp_style_expression_bodied_operators = true:warning
+; Properties
+csharp_style_expression_bodied_properties = true:warning
+; Indexers
+csharp_style_expression_bodied_indexers = true:warning
+; Accessors
+csharp_style_expression_bodied_accessors = true:warning
+
+;-------------------------------------------------------------------------------
+; Pattern matching
+;-------------------------------------------------------------------------------
+; "is" with "cast" checking
+csharp_style_pattern_matching_over_is_with_cast_check = true:error
+; "as" with "null" checking
+csharp_style_pattern_matching_over_as_with_null_check = true:error
+; Inlined variable declarations (IDE0018)
+csharp_style_inlined_variable_declaration = true:error
+
+;-------------------------------------------------------------------------------
+; Expression-level Preferences
+;-------------------------------------------------------------------------------
+; Simplify default expressions
+csharp_prefer_simple_default_expression = true:errorr
+
+;-------------------------------------------------------------------------------
+; "Null" Checking Preferences
+;-------------------------------------------------------------------------------
+; Throw Expressions
+csharp_style_throw_expression = true:errorr
+; Prefer conditional delegate calls (IDE0041)
+csharp_style_conditional_delegate_call = true:error
+
+
+;-------------------------------------------------------------------------------
+; Code Block Preferences
+;-------------------------------------------------------------------------------
+csharp_prefer_braces = false:suggestion
+
+;-------------------------------------------------------------------------------
+; Code Block Preferences
+;-------------------------------------------------------------------------------
+; Organize Usings
+; dotnet_sort_system_directives_first = true
+
+;-------------------------------------------------------------------------------
+; Newline Options
+;-------------------------------------------------------------------------------
+;Newline Before Open Brace ({)
+csharp_new_line_before_open_brace = all
+; Newline Before else
+csharp_new_line_before_else = false
+; Newline Before catch
+csharp_new_line_before_catch = false
+; Newline Before finally
+csharp_new_line_before_finally = false
+; Newline Before Members in Object Initializers
+csharp_new_line_before_members_in_object_initializers = true
+; Newline Before Members in Anonymous Types
+csharp_new_line_before_members_in_anonymous_types = true
+; Newline Before Members in Query Expression Clauses
+csharp_new_line_between_query_expression_clauses = true
+
+;-------------------------------------------------------------------------------
+; Indentation Options
+;-------------------------------------------------------------------------------
+; Indent switch Case Contents
+csharp_indent_case_contents = true
+; Indent switch Labels
+csharp_indent_switch_labels = true
+; Label Positioning
+csharp_indent_labels = flush_left
+
+;-------------------------------------------------------------------------------
+; Spacing Options
+;-------------------------------------------------------------------------------
+; Space After Cast
+csharp_space_after_cast = true
+; Space After Keywords in Control Flow Statements
+csharp_space_after_keywords_in_control_flow_statements = true
+; Space Between Method Declaration Argument-List Parentheses
+csharp_space_between_method_declaration_parameter_list_parentheses = false
+; Space Within Parentheses for Method Call Argument List
+csharp_space_between_method_call_parameter_list_parentheses = false
+; Space Within Parentheses for Other Options
+csharp_space_between_parentheses = expressions
+
+;-------------------------------------------------------------------------------
+; Wrapping Options
+;-------------------------------------------------------------------------------
+; Leave Statements and Member Declarations on the Same Line
+csharp_preserve_single_line_statements = true
+; Leave Block on Single Line
+csharp_preserve_single_line_blocks = true
