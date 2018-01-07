@@ -61,6 +61,9 @@ namespace microObjectPizzaShop
 
     public class Pizza : IPizza
     {
+        private static readonly IText PizzaType = new TextOf("Personal pizza");
+        private static readonly IText Format = new TextOf("{0} with {1}");
+
         private readonly IText _topping;
 
         public Pizza() : this(new EmptyText()) { }
@@ -69,8 +72,8 @@ namespace microObjectPizzaShop
         public IPizza AddTopping(IText topping) => new Pizza(topping);
         public IText Description()
         {
-            if (new EqualsText(_topping, new EmptyText()).Value()) return new TextOf("Personal pizza");
-            return new FormatText(new TextOf("Personal pizza with {0}"), _topping);
+            if (new EqualsText(_topping, new EmptyText()).Value()) return PizzaType;
+            return new FormatText(Format, PizzaType, _topping);
         }
     }
 }
