@@ -36,6 +36,19 @@ namespace microObjectPizzaShop
             //Assert
             actual.Should().Be("Personal pizza");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldDisplayDescriptionWithTopping()
+        {
+            //Arrange
+            IPizza initial = new Pizza();
+            IPizza subject = initial.AddTopping("SomeTopping");
+            //Act
+            string actual = subject.Description();
+
+            //Assert
+            actual.Should().Be("Personal pizza with SomeTopping");
+        }
     }
 
     public interface IPizza
@@ -46,7 +59,16 @@ namespace microObjectPizzaShop
 
     public class Pizza : IPizza
     {
-        public IPizza AddTopping(string topping) => new Pizza();
-        public string Description() => "Personal pizza";
+        private readonly string _topping;
+
+        public Pizza() : this(string.Empty) { }
+        private Pizza(string topping) => _topping = topping;
+
+        public IPizza AddTopping(string topping) => new Pizza(topping);
+        public string Description()
+        {
+            if (string.IsNullOrWhiteSpace(_topping)) return "Personal pizza";
+            return $"Personal pizza with {_topping}";
+        }
     }
 }
