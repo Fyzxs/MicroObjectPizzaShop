@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
+using microObjectPizzaShop.Library;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Linq;
 
 namespace microObjectPizzaShop
 {
@@ -73,65 +72,5 @@ namespace microObjectPizzaShop
             if (new EqualsText(_topping, new EmptyText()).Value()) return new TextOf("Personal pizza");
             return new FormatText(new TextOf("Personal pizza with {0}"), _topping);
         }
-    }
-
-    public class FormatText : IText
-    {
-        private readonly IText _format;
-        private readonly IText[] _args;
-
-        public FormatText(IText format, params IText[] args)
-        {
-            _format = format;
-            _args = args;
-        }
-
-        public string String() => string.Format(_format.String(), Rebase());
-        private string[] Rebase() => _args.Select(s => s.String()).ToArray();
-    }
-
-    public class EqualsText : IScalar<bool>
-    {
-        private readonly IText _rhs;
-        private readonly IText _lhs;
-
-        public EqualsText(IText rhs, IText lhs)
-        {
-            _rhs = rhs;
-            _lhs = lhs;
-        }
-
-        public bool Value() => _rhs.String().Equals(_lhs.String());
-    }
-
-    public interface IScalar<out T>
-    {
-        T Value();
-    }
-
-    public interface IText
-    {
-        string String();
-    }
-    public class EmptyText : IText
-    {
-        public string String() => string.Empty;
-    }
-    public class TextOf : IText
-    {
-        private readonly IText _origin;
-
-        private class DelayedText : IText
-        {
-            private readonly Func<string> _origin;
-            public DelayedText(Func<string> origin) => _origin = origin;
-            public string String() => _origin();
-        }
-
-        public TextOf(string origin) : this(new DelayedText(() => origin)) { }
-
-        public TextOf(IText origin) => _origin = origin;
-
-        public string String() => _origin.String();
     }
 }
