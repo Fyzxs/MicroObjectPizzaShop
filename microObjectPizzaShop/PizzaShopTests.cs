@@ -14,7 +14,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza subject = new Pizza();
+            IPizza subject = new PersonalPizza();
 
             //Act
             IText actual = subject.Description();
@@ -27,7 +27,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayDescriptionWithTopping()
         {
             //Arrange
-            IPizza initial = new Pizza();
+            IPizza initial = new PersonalPizza();
             IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
             //Act
             IText actual = subject.Description();
@@ -40,7 +40,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceWithNoTopping()
         {
             //Arrange
-            IPizza subject = new Pizza();
+            IPizza subject = new PersonalPizza();
 
             //Act
             IText val = subject.Price();
@@ -53,7 +53,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceWithTopping()
         {
             //Arrange
-            IPizza initial = new Pizza();
+            IPizza initial = new PersonalPizza();
             IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
 
             //Act
@@ -67,7 +67,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceWithMultipleToppings()
         {
             //Arrange
-            IPizza initial = new Pizza();
+            IPizza initial = new PersonalPizza();
             IPizza subject = initial
                 .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
@@ -83,7 +83,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvideDescriptionWithTwoToppings()
         {
             //Arrange
-            IPizza initial = new Pizza();
+            IPizza initial = new PersonalPizza();
             IPizza subject = initial
                 .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
@@ -99,7 +99,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvideDescriptionWithThreeToppings()
         {
             //Arrange
-            IPizza initial = new Pizza();
+            IPizza initial = new PersonalPizza();
             IPizza subject = initial
                 .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1))
@@ -116,7 +116,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceForMeatAndNonMeatTopping()
         {
             //Arrange
-            IPizza initial = new Pizza();
+            IPizza initial = new PersonalPizza();
             IPizza subject = initial
                 .AddTopping(new Topping(new TextOf("MeatTopping"), .15))
                 .AddTopping(new Topping(new TextOf("NonMeat"), .1));
@@ -140,6 +140,20 @@ namespace MicroObjectPizzaShop
             //Assert
             val.String().Should().Be("$18.00");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvideFamilyPriceWithTopping()
+        {
+            //Arrange
+            IPizza initial = new FamilyPizza();
+            IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .15));
+
+            //Act
+            IText val = subject.Price();
+
+            //Assert
+            val.String().Should().Be("$20.70");
+        }
         [TestMethod, TestCategory("unit")]
         public void ShouldDisplayFamilyDescriptionWithNoToppings()
         {
@@ -152,12 +166,6 @@ namespace MicroObjectPizzaShop
             //Assert
             actual.String().Should().Be("Family pizza");
         }
-    }
-
-    public class FamilyPizza : Pizza
-    {
-        protected override IText Name() => new TextOf("Family");
-        protected override double BasePrice() => 18;
     }
 
     public class Topping : ITopping
@@ -188,15 +196,34 @@ namespace MicroObjectPizzaShop
         IPizza AddTopping(ITopping topping);
     }
 
-    public class Pizza : IPizza
+
+    public class FamilyPizza : PersonalPizza
+    {
+        public FamilyPizza() : this(new List<ITopping>()) { }
+        public FamilyPizza(List<ITopping> list) : base(list) { }
+
+        protected override IText Name() => new TextOf("Family");
+        protected override double BasePrice() => 18;
+        protected override IPizza NewPizza(List<ITopping> toppings) => new FamilyPizza(toppings);
+    }
+
+    public class PersonalPizza : Pizza
+    {
+        public PersonalPizza() : this(new List<ITopping>()) { }
+        public PersonalPizza(List<ITopping> list) : base(list) { }
+
+        protected override IText Name() => new TextOf("Personal");
+        protected override double BasePrice() => 9;
+        protected override IPizza NewPizza(List<ITopping> toppings) => new PersonalPizza(toppings);
+    }
+
+    public abstract class Pizza : IPizza
     {
         private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");
         private static readonly IText MultipleToppingsFormat = new TextOf("{0} pizza with {1}");
 
         private readonly List<ITopping> _toppings;
-
-        public Pizza() : this(new List<ITopping>()) { }
-        private Pizza(List<ITopping> toppings) => _toppings = toppings;
+        protected Pizza(List<ITopping> toppings) => _toppings = toppings;
 
 
         public IText Description()
@@ -213,7 +240,7 @@ namespace MicroObjectPizzaShop
         public IPizza AddTopping(ITopping topping)
         {
             _toppings.Add(topping);
-            return new Pizza(_toppings);
+            return NewPizza(_toppings);
         }
 
         public IText Price()
@@ -221,13 +248,15 @@ namespace MicroObjectPizzaShop
             double cost = 0;
             foreach (ITopping topping in _toppings)
             {
-                cost += topping.Cost(BasePrice());
+                double basePrice = BasePrice();
+                cost += topping.Cost(basePrice);
             }
 
             return new TextOf(( BasePrice() + cost ).ToString("C"));
         }
 
-        protected virtual IText Name() => new TextOf("Personal");
-        protected virtual double BasePrice() => 9;
+        protected abstract IPizza NewPizza(List<ITopping> toppings);
+        protected abstract IText Name();
+        protected abstract double BasePrice();
     }
 }
