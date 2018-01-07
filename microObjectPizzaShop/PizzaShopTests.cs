@@ -72,8 +72,13 @@ namespace microObjectPizzaShop
         public IPizza AddTopping(IText topping) => new Pizza(topping);
         public IText Description()
         {
-            if (new EqualsText(_topping, new EmptyText()).Value()) return PizzaType;
+            if (_topping.IsEmpty()) return PizzaType;
             return new FormatText(Format, PizzaType, _topping);
         }
+    }
+
+    public static class TextExtensions
+    {
+        public static bool IsEmpty(this IText origin) => new EqualsText(origin, new EmptyText()).Value();
     }
 }
