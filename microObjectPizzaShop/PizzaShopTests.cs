@@ -1,14 +1,17 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace microObjectPizzaShop
 {
     [TestClass]
-    public class UnitTest1
+    public class PizzaShopTests
     {
-        [TestMethod]
-        public void TestMethod1()
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHavePizza()
         {
+            new Pizza();
         }
     }
+
+    public class Pizza { }
 }
