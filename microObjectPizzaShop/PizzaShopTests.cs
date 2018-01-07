@@ -6,12 +6,6 @@ namespace microObjectPizzaShop
     public class PizzaShopTests
     {
         [TestMethod, TestCategory("unit")]
-        public void ShouldHavePizza()
-        {
-            new Pizza();
-        }
-
-        [TestMethod, TestCategory("unit")]
         public void ShouldImplementIPizza()
         {
             IPizza pizza = new Pizza();
