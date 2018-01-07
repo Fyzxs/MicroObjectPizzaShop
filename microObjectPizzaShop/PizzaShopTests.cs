@@ -11,7 +11,15 @@ namespace microObjectPizzaShop
         {
             new Pizza();
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldImplementIPizza()
+        {
+            IPizza pizz = new Pizza();
+        }
     }
 
-    public class Pizza { }
+    public interface IPizza { }
+
+    public class Pizza : IPizza { }
 }
