@@ -1,9 +1,8 @@
-﻿using microObjectPizzaShop.Library.Texts;
-using microObjectPizzaShop.Pizza.Toppers;
+﻿using System.Linq;
+using microObjectPizzaShop.Library.Texts;
 using MicroObjectPizzaShop.Library.Texts;
-using System.Linq;
 
-namespace microObjectPizzaShop.Pizza
+namespace microObjectPizzaShop.Pizza.Toppers
 {
     public class SentenceJoinToppings : IText
     {
