@@ -166,6 +166,20 @@ namespace MicroObjectPizzaShop
             //Assert
             actual.String().Should().Be("Family pizza");
         }
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveImmutableToppings()
+        {
+            //Arrange
+            IPizza initial = new PersonalPizza();
+            IPizza second = initial.AddTopping(new Topping(new TextOf("NonMeat"), .1));
+
+            //Act
+            IText initialPrice = initial.Price();
+            IText secondPrice = second.Price();
+
+            //Assert
+            initialPrice.String().Should().NotBe(secondPrice.String());
+        }
     }
 
     public class Topping : ITopping
@@ -239,8 +253,10 @@ namespace MicroObjectPizzaShop
 
         public IPizza AddTopping(ITopping topping)
         {
-            _toppings.Add(topping);
-            return NewPizza(_toppings);
+            List<ITopping> toppings = new List<ITopping>();
+            toppings.AddRange(_toppings);
+            toppings.Add(topping);
+            return NewPizza(toppings);
         }
 
         public IText Price()
@@ -259,4 +275,21 @@ namespace MicroObjectPizzaShop
         protected abstract IText Name();
         protected abstract double BasePrice();
     }
+
+    public class Toppings : IToppings
+    {
+        private readonly List<ITopping> _toppings;
+
+        public Toppings() : this(new List<ITopping>())
+        {
+
+        }
+
+        public Toppings(List<ITopping> toppings) => _toppings = toppings;
+
+        public bool Any() => _toppings.Any();
+
+    }
+
+    public interface IToppings { }
 }
