@@ -127,6 +127,37 @@ namespace MicroObjectPizzaShop
             //Assert
             val.String().Should().Be("$11.25");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveFamilyPizza()
+        {
+            //Arrange
+            IPizza subject = new FamilyPizza();
+
+            //Act
+            IText val = subject.Price();
+
+            //Assert
+            val.String().Should().Be("$18.00");
+        }
+        [TestMethod, TestCategory("unit")]
+        public void ShouldDisplayFamilyDescriptionWithNoToppings()
+        {
+            //Arrange
+            IPizza subject = new FamilyPizza();
+
+            //Act
+            IText actual = subject.Description();
+
+            //Assert
+            actual.String().Should().Be("Family pizza");
+        }
+    }
+
+    public class FamilyPizza : Pizza
+    {
+        protected override IText Name() => new TextOf("Family");
+        protected override double BasePrice() => 18;
     }
 
     public class Topping : ITopping
@@ -159,23 +190,24 @@ namespace MicroObjectPizzaShop
 
     public class Pizza : IPizza
     {
-        private static readonly IText PizzaType = new TextOf("Personal pizza");
-        private static readonly IText Format = new TextOf("{0} with {1}");
+        private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");
+        private static readonly IText MultipleToppingsFormat = new TextOf("{0} pizza with {1}");
 
         private readonly List<ITopping> _toppings;
 
         public Pizza() : this(new List<ITopping>()) { }
         private Pizza(List<ITopping> toppings) => _toppings = toppings;
 
+
         public IText Description()
         {
-            if (!_toppings.Any()) return PizzaType;
+            if (!_toppings.Any()) return new FormatText(NoToppingsFormat, Name());
             List<IText> texts = new List<IText>
             {
-                PizzaType,
+                Name(),
                 new SentenceJoinToppings(_toppings)
             };
-            return new FormatText(Format, texts.ToArray());
+            return new FormatText(MultipleToppingsFormat, texts.ToArray());
         }
 
         public IPizza AddTopping(ITopping topping)
@@ -189,10 +221,13 @@ namespace MicroObjectPizzaShop
             double cost = 0;
             foreach (ITopping topping in _toppings)
             {
-                cost += topping.Cost(9);
+                cost += topping.Cost(BasePrice());
             }
 
-            return new TextOf(( 9 + cost ).ToString("C"));
+            return new TextOf(( BasePrice() + cost ).ToString("C"));
         }
+
+        protected virtual IText Name() => new TextOf("Personal");
+        protected virtual double BasePrice() => 9;
     }
 }
