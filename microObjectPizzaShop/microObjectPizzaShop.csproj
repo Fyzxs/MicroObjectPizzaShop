@@ -67,9 +67,7 @@
     <Compile Include="Library\Texts\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />
     <Compile Include="Pizza\PizzaDescription.cs" />
-    <Compile Include="Pizza\SentenceJoinToppings.cs" />
-    <Compile Include="Pizza\Toppers\ITopping.cs" />
-    <Compile Include="Pizza\Toppers\IToppings.cs" />
+    <Compile Include="Pizza\Toppers\SentenceJoinToppings.cs" />
     <Compile Include="Pizza\Toppers\Topping.cs" />
     <Compile Include="Pizza\Toppers\Toppings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
