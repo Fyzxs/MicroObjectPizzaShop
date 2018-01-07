@@ -22,6 +22,7 @@ namespace microObjectPizzaShop
             IPizza actual = subject.AddTopping("SomeTopping");
 
             //Assert
+            actual.Should().NotBeNull();
         }
 
         [TestMethod, TestCategory("unit")]
