@@ -17,10 +17,10 @@ namespace MicroObjectPizzaShop
             IPizza subject = new PersonalPizza();
 
             //Act
-            IText actual = subject.Description();
+            IDescription actual = subject.Description();
 
             //Assert
-            actual.String().Should().Be("Personal pizza");
+            actual.Value().String().Should().Be("Personal pizza");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -30,10 +30,10 @@ namespace MicroObjectPizzaShop
             IPizza initial = new PersonalPizza();
             IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
             //Act
-            IText actual = subject.Description();
+            IDescription actual = subject.Description();
 
             //Assert
-            actual.String().Should().Be("Personal pizza with SomeTopping");
+            actual.Value().String().Should().Be("Personal pizza with SomeTopping");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -89,10 +89,10 @@ namespace MicroObjectPizzaShop
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
 
             //Act
-            IText actual = subject.Description();
+            IDescription actual = subject.Description();
 
             //Assert
-            actual.String().Should().Be("Personal pizza with SomeTopping and OtherTopping");
+            actual.Value().String().Should().Be("Personal pizza with SomeTopping and OtherTopping");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -106,10 +106,10 @@ namespace MicroObjectPizzaShop
                 .AddTopping(new Topping(new TextOf("Delicious"), .1));
 
             //Act
-            IText actual = subject.Description();
+            IDescription actual = subject.Description();
 
             //Assert
-            actual.String().Should().Be("Personal pizza with SomeTopping, OtherTopping and Delicious");
+            actual.Value().String().Should().Be("Personal pizza with SomeTopping, OtherTopping and Delicious");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -161,10 +161,10 @@ namespace MicroObjectPizzaShop
             IPizza subject = new FamilyPizza();
 
             //Act
-            IText actual = subject.Description();
+            IDescription actual = subject.Description();
 
             //Assert
-            actual.String().Should().Be("Family pizza");
+            actual.Value().String().Should().Be("Family pizza");
         }
         [TestMethod, TestCategory("unit")]
         public void ShouldHaveImmutableToppings()
@@ -205,7 +205,7 @@ namespace MicroObjectPizzaShop
 
     public interface IPizza
     {
-        IText Description();
+        IDescription Description();
         IText Price();
         IPizza AddTopping(ITopping topping);
     }
@@ -213,83 +213,99 @@ namespace MicroObjectPizzaShop
 
     public class FamilyPizza : PersonalPizza
     {
-        public FamilyPizza() : this(new List<ITopping>()) { }
-        public FamilyPizza(List<ITopping> list) : base(list) { }
+        public FamilyPizza() : this(new Toppings()) { }
+        public FamilyPizza(IToppings toppings) : base(toppings) { }
 
         protected override IText Name() => new TextOf("Family");
         protected override double BasePrice() => 18;
-        protected override IPizza NewPizza(List<ITopping> toppings) => new FamilyPizza(toppings);
+        protected override IPizza NewPizza(IToppings toppings) => new FamilyPizza(toppings);
     }
 
     public class PersonalPizza : Pizza
     {
-        public PersonalPizza() : this(new List<ITopping>()) { }
-        public PersonalPizza(List<ITopping> list) : base(list) { }
+        public PersonalPizza() : this(new Toppings()) { }
+        public PersonalPizza(IToppings toppings) : base(toppings) { }
 
         protected override IText Name() => new TextOf("Personal");
         protected override double BasePrice() => 9;
-        protected override IPizza NewPizza(List<ITopping> toppings) => new PersonalPizza(toppings);
+        protected override IPizza NewPizza(IToppings toppings) => new PersonalPizza(toppings);
     }
 
     public abstract class Pizza : IPizza
     {
+        private readonly IToppings _toppings;
+
+        protected Pizza(IToppings toppings) => _toppings = toppings;
+
+        public IDescription Description() => new PizzaDescription(Name(), _toppings);
+
+        public IPizza AddTopping(ITopping topping) => NewPizza(_toppings.Add(topping));
+
+        public IText Price() => new TextOf(( BasePrice() + _toppings.Cost(BasePrice()) ).ToString("C"));
+
+        protected abstract IPizza NewPizza(IToppings toppings);
+        protected abstract IText Name();
+        protected abstract double BasePrice();
+    }
+
+    public class PizzaDescription : IDescription
+    {
         private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");
         private static readonly IText MultipleToppingsFormat = new TextOf("{0} pizza with {1}");
 
-        private readonly List<ITopping> _toppings;
-        protected Pizza(List<ITopping> toppings) => _toppings = toppings;
+        private readonly IText _type;
+        private readonly IToppings _toppings;
 
-
-        public IText Description()
+        public PizzaDescription(IText type, IToppings toppings)
         {
-            if (!_toppings.Any()) return new FormatText(NoToppingsFormat, Name());
+            _type = type;
+            _toppings = toppings;
+        }
+
+        public IText Value()
+        {
+            if (_toppings.Empty()) return new FormatText(NoToppingsFormat, _type);
             List<IText> texts = new List<IText>
             {
-                Name(),
-                new SentenceJoinToppings(_toppings)
+                _type,
+                _toppings.SentenceJoined()
             };
             return new FormatText(MultipleToppingsFormat, texts.ToArray());
         }
+    }
 
-        public IPizza AddTopping(ITopping topping)
-        {
-            List<ITopping> toppings = new List<ITopping>();
-            toppings.AddRange(_toppings);
-            toppings.Add(topping);
-            return NewPizza(toppings);
-        }
-
-        public IText Price()
-        {
-            double cost = 0;
-            foreach (ITopping topping in _toppings)
-            {
-                double basePrice = BasePrice();
-                cost += topping.Cost(basePrice);
-            }
-
-            return new TextOf(( BasePrice() + cost ).ToString("C"));
-        }
-
-        protected abstract IPizza NewPizza(List<ITopping> toppings);
-        protected abstract IText Name();
-        protected abstract double BasePrice();
+    public interface IDescription
+    {
+        IText Value();
     }
 
     public class Toppings : IToppings
     {
         private readonly List<ITopping> _toppings;
 
-        public Toppings() : this(new List<ITopping>())
-        {
-
-        }
+        public Toppings() : this(new List<ITopping>()) { }
 
         public Toppings(List<ITopping> toppings) => _toppings = toppings;
 
-        public bool Any() => _toppings.Any();
+        public double Cost(double basePrice) => _toppings.Sum(o => o.Cost(basePrice));
 
+        public bool Empty() => !_toppings.Any();
+        public IToppings Add(ITopping topping)
+        {
+            List<ITopping> toppings = new List<ITopping>();
+            toppings.AddRange(_toppings);
+            toppings.Add(topping);
+            return new Toppings(toppings);
+        }
+
+        public IText SentenceJoined() => new SentenceJoinToppings(_toppings);
     }
 
-    public interface IToppings { }
+    public interface IToppings
+    {
+        double Cost(double basePrice);
+        bool Empty();
+        IToppings Add(ITopping topping);
+        IText SentenceJoined();
+    }
 }
