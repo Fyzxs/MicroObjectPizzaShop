@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\IWriteString.cs" />
+    <Compile Include="Library\Money.cs" />
     <Compile Include="Library\Texts\EmptyText.cs" />
     <Compile Include="Library\Texts\FormatText.cs" />
     <Compile Include="Library\Texts\IScalar.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Pizza\IDescription.cs" />
     <Compile Include="Pizza\PizzaDescription.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestWriteString.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

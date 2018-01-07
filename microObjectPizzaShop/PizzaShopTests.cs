@@ -173,7 +173,6 @@ namespace MicroObjectPizzaShop
             //Arrange
             IPizza pizza = new FamilyPizza();
             IDescription subject = pizza.Description();
-
             TestWriteString testWriteString = new TestWriteString();
 
             //Act
@@ -227,28 +226,6 @@ namespace MicroObjectPizzaShop
         IPizza AddTopping(ITopping topping);
     }
 
-
-    public class Money
-    {
-        public override bool Equals(object other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            if (GetType() != other.GetType()) return false;
-            return Equals((Money) other);
-        }
-        protected bool Equals(Money other) => _amount.Equals(other._amount);
-
-        public override int GetHashCode() => _amount.GetHashCode();
-
-        private readonly double _amount;
-        public Money(double amount) => _amount = amount;
-        public void Into(IWriteString item) => item.Write(_amount.ToString("C"));
-        public static Money operator +(Money lhs, Money rhs) => new Money(lhs._amount + rhs._amount);
-        public static Money operator %(Money lhs, double pct) => new Money(lhs._amount * pct);
-    }
-
-
     public class FamilyPizza : PersonalPizza
     {
         public FamilyPizza() : this(new Toppings()) { }
@@ -286,15 +263,6 @@ namespace MicroObjectPizzaShop
         protected abstract Money BasePrice();
     }
 
-    public class TestWriteString : IWriteString
-    {
-        private string _value;
-
-        public void Write(string value) => _value = value;
-
-        public void AssertValueIs(string expected) => _value.Should().Be(expected);
-    }
-
     public class Toppings : IToppings
     {
         private readonly List<ITopping> _toppings;
@@ -308,7 +276,7 @@ namespace MicroObjectPizzaShop
             Money result = new Money(0);
             foreach (ITopping topping in _toppings)
             {
-                result = result + topping.Cost(basePrice);
+                result += topping.Cost(basePrice);
             }
             return result;
         }
@@ -322,7 +290,7 @@ namespace MicroObjectPizzaShop
             return new Toppings(toppings);
         }
 
-        public IText SentenceJoined() => new SentenceJoinToppings(_toppings);
+        public IText Joined() => new SentenceJoinToppings(_toppings);
     }
 
     public interface IToppings
@@ -330,6 +298,6 @@ namespace MicroObjectPizzaShop
         Money Cost(Money basePrice);
         bool Empty();
         IToppings Add(ITopping topping);
-        IText SentenceJoined();
+        IText Joined();
     }
 }

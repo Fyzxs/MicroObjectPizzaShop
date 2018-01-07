@@ -30,7 +30,7 @@ namespace microObjectPizzaShop.Pizza {
             List<IText> texts = new List<IText>
             {
                 _type,
-                _toppings.SentenceJoined()
+                _toppings.Joined()
             };
             item.Write(new FormatText(MultipleToppingsFormat, texts.ToArray()).String());
         }
