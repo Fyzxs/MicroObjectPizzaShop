@@ -59,6 +59,7 @@
     <Compile Include="Library\Texts\EmptyText.cs" />
     <Compile Include="Library\Texts\FormatText.cs" />
     <Compile Include="Library\Texts\IScalar.cs" />
+    <Compile Include="Library\Texts\SentenceJoinTexts.cs" />
     <Compile Include="Library\Texts\Text.cs" />
     <Compile Include="Library\Texts\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />

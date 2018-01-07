@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using microObjectPizzaShop.Library.Texts;
 using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -156,26 +157,5 @@ namespace MicroObjectPizzaShop
         }
 
         public IText Price() => new TextOf(( 9 + _toppings.Count * .9 ).ToString("C"));
-    }
-
-    public class SentenceJoinTexts : Text
-    {
-        private readonly List<IText> _toppings;
-
-        public SentenceJoinTexts(List<IText> toppings) => _toppings = toppings;
-
-        public override string String()
-        {
-            if (_toppings.Count == 0) return string.Empty;
-            if (_toppings.Count == 1) return _toppings.First().String();
-
-            string build = _toppings.First().String();
-            for (int idx = 1; idx < _toppings.Count - 1; idx++)
-            {
-                build += ", " + _toppings[idx].String();
-            }
-
-            return build + " and " + _toppings.Last().String();
-        }
     }
 }
