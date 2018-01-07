@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace microObjectPizzaShop
 {
@@ -8,29 +9,44 @@ namespace microObjectPizzaShop
         [TestMethod, TestCategory("unit")]
         public void ShouldImplementIPizza()
         {
-            IPizza pizza = new Pizza();
+            IPizza subject = new Pizza();
         }
 
         [TestMethod, TestCategory("unit")]
         public void ShouldAddTopping()
         {
             //Arrange
-            IPizza pizza = new Pizza();
+            IPizza subject = new Pizza();
 
             //Act
-            IPizza newPizza = pizza.AddTopping("SomeTopping");
+            IPizza actual = subject.AddTopping("SomeTopping");
 
             //Assert
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldDisplayDescription()
+        {
+            //Arrange
+            IPizza subject = new Pizza();
+
+            //Act
+            string actual = subject.Description();
+
+            //Assert
+            actual.Should().Be("Personal pizza");
         }
     }
 
     public interface IPizza
     {
         IPizza AddTopping(string topping);
+        string Description();
     }
 
     public class Pizza : IPizza
     {
         public IPizza AddTopping(string topping) => new Pizza();
+        public string Description() => "Personal pizza";
     }
 }
