@@ -62,7 +62,7 @@
     <Compile Include="Library\Texts\FormatText.cs" />
     <Compile Include="Library\Texts\IScalar.cs" />
     <Compile Include="Library\Texts\SentenceJoinToppings.cs" />
-    <Compile Include="Library\Texts\Text.cs" />
+    <Compile Include="Library\Texts\IText.cs" />
     <Compile Include="Library\Texts\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />
     <Compile Include="Pizza\IDescription.cs" />

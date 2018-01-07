@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace microObjectPizzaShop.Library.Texts
 {
-    public class SentenceJoinToppings : Text
+    public class SentenceJoinToppings : IText
     {
         private readonly List<ITopping> _toppings;
 
         public SentenceJoinToppings(List<ITopping> toppings) => _toppings = toppings;
 
-        public override string String()
+        public string String()
         {
             if (_toppings.Count == 0) return string.Empty;
             if (_toppings.Count == 1) return _toppings.First().Name().String();

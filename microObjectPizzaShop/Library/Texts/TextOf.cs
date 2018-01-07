@@ -2,7 +2,7 @@
 
 namespace MicroObjectPizzaShop.Library.Texts
 {
-    public class TextOf : Text
+    public class TextOf : IText
     {
         private readonly IText _origin;
 
@@ -17,6 +17,6 @@ namespace MicroObjectPizzaShop.Library.Texts
 
         public TextOf(IText origin) => _origin = origin;
 
-        public override string String() => _origin.String();
+        public string String() => _origin.String();
     }
 }
