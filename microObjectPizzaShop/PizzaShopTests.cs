@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace microObjectPizzaShop
 {
@@ -20,7 +21,7 @@ namespace microObjectPizzaShop
             IPizza subject = new Pizza();
 
             //Act
-            IPizza actual = subject.AddTopping("SomeTopping");
+            IPizza actual = subject.AddTopping(new TextOf("SomeTopping"));
 
             //Assert
             actual.Should().NotBeNull();
@@ -33,10 +34,10 @@ namespace microObjectPizzaShop
             IPizza subject = new Pizza();
 
             //Act
-            string actual = subject.Description();
+            IText actual = subject.Description();
 
             //Assert
-            actual.Should().Be("Personal pizza");
+            actual.String().Should().Be("Personal pizza");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -44,39 +45,77 @@ namespace microObjectPizzaShop
         {
             //Arrange
             IPizza initial = new Pizza();
-            IPizza subject = initial.AddTopping("SomeTopping");
+            IPizza subject = initial.AddTopping(new TextOf("SomeTopping"));
             //Act
-            string actual = subject.Description();
+            IText actual = subject.Description();
 
             //Assert
-            actual.Should().Be("Personal pizza with SomeTopping");
+            actual.String().Should().Be("Personal pizza with SomeTopping");
         }
     }
 
     public interface IPizza
     {
-        IPizza AddTopping(string topping);
-        string Description();
+        IPizza AddTopping(IText topping);
+        IText Description();
     }
 
     public class Pizza : IPizza
     {
-        private readonly string _topping;
+        private readonly IText _topping;
 
-        public Pizza() : this(string.Empty) { }
-        private Pizza(string topping) => _topping = topping;
+        public Pizza() : this(new EmptyText()) { }
+        private Pizza(IText topping) => _topping = topping;
 
-        public IPizza AddTopping(string topping) => new Pizza(topping);
-        public string Description()
+        public IPizza AddTopping(IText topping) => new Pizza(topping);
+        public IText Description()
         {
-            if (string.IsNullOrWhiteSpace(_topping)) return "Personal pizza";
-            return $"Personal pizza with {_topping}";
+            if (new EqualsText(_topping, new EmptyText()).Value()) return new TextOf("Personal pizza");
+            return new FormatText(new TextOf("Personal pizza with {0}"), _topping);
         }
+    }
+
+    public class FormatText : IText
+    {
+        private readonly IText _format;
+        private readonly IText[] _args;
+
+        public FormatText(IText format, params IText[] args)
+        {
+            _format = format;
+            _args = args;
+        }
+
+        public string String() => string.Format(_format.String(), Rebase());
+        private string[] Rebase() => _args.Select(s => s.String()).ToArray();
+    }
+
+    public class EqualsText : IScalar<bool>
+    {
+        private readonly IText _rhs;
+        private readonly IText _lhs;
+
+        public EqualsText(IText rhs, IText lhs)
+        {
+            _rhs = rhs;
+            _lhs = lhs;
+        }
+
+        public bool Value() => _rhs.String().Equals(_lhs.String());
+    }
+
+    public interface IScalar<out T>
+    {
+        T Value();
     }
 
     public interface IText
     {
         string String();
+    }
+    public class EmptyText : IText
+    {
+        public string String() => string.Empty;
     }
     public class TextOf : IText
     {
