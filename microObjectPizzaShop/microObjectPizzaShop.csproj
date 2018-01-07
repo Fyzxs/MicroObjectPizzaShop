@@ -57,10 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library\EmptyText.cs" />
-    <Compile Include="Library\EqualsText.cs" />
     <Compile Include="Library\FormatText.cs" />
     <Compile Include="Library\IScalar.cs" />
-    <Compile Include="Library\IText.cs" />
+    <Compile Include="Library\Text.cs" />
     <Compile Include="Library\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

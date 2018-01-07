@@ -1,6 +1,6 @@
 ﻿namespace microObjectPizzaShop.Library {
-    public class EmptyText : IText
+    public class EmptyText : Text
     {
-        public string String() => string.Empty;
+        public override string String() => string.Empty;
     }
 }

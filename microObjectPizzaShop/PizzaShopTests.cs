@@ -33,7 +33,7 @@ namespace microObjectPizzaShop
             IPizza subject = new Pizza();
 
             //Act
-            IText actual = subject.Description();
+            Text actual = subject.Description();
 
             //Assert
             actual.String().Should().Be("Personal pizza");
@@ -46,39 +46,33 @@ namespace microObjectPizzaShop
             IPizza initial = new Pizza();
             IPizza subject = initial.AddTopping(new TextOf("SomeTopping"));
             //Act
-            IText actual = subject.Description();
+            Text actual = subject.Description();
 
             //Assert
             actual.String().Should().Be("Personal pizza with SomeTopping");
         }
     }
-
     public interface IPizza
     {
-        IPizza AddTopping(IText topping);
-        IText Description();
+        IPizza AddTopping(Text topping);
+        Text Description();
     }
 
     public class Pizza : IPizza
     {
-        private static readonly IText PizzaType = new TextOf("Personal pizza");
-        private static readonly IText Format = new TextOf("{0} with {1}");
+        private static readonly Text PizzaType = new TextOf("Personal pizza");
+        private static readonly Text Format = new TextOf("{0} with {1}");
 
-        private readonly IText _topping;
+        private readonly Text _topping;
 
         public Pizza() : this(new EmptyText()) { }
-        private Pizza(IText topping) => _topping = topping;
+        private Pizza(Text topping) => _topping = topping;
 
-        public IPizza AddTopping(IText topping) => new Pizza(topping);
-        public IText Description()
+        public IPizza AddTopping(Text topping) => new Pizza(topping);
+        public Text Description()
         {
             if (_topping.IsEmpty()) return PizzaType;
             return new FormatText(Format, PizzaType, _topping);
         }
-    }
-
-    public static class TextExtensions
-    {
-        public static bool IsEmpty(this IText origin) => new EqualsText(origin, new EmptyText()).Value();
     }
 }

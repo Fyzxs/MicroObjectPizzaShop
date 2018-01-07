@@ -1,21 +1,22 @@
 ﻿using System;
 
-namespace microObjectPizzaShop.Library {
-    public class TextOf : IText
+namespace microObjectPizzaShop.Library
+{
+    public class TextOf : Text
     {
-        private readonly IText _origin;
+        private readonly Text _origin;
 
-        private class DelayedText : IText
+        private class DelayedText : Text
         {
             private readonly Func<string> _origin;
             public DelayedText(Func<string> origin) => _origin = origin;
-            public string String() => _origin();
+            public override string String() => _origin();
         }
 
         public TextOf(string origin) : this(new DelayedText(() => origin)) { }
 
-        public TextOf(IText origin) => _origin = origin;
+        public TextOf(Text origin) => _origin = origin;
 
-        public string String() => _origin.String();
+        public override string String() => _origin.String();
     }
 }
