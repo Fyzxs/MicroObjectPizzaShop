@@ -19,14 +19,13 @@ namespace microObjectPizzaShop.Library.Texts
         {
             string source = _source.String();
             string target = _target.String();
-            string replace = _replace.String();
 
             int place = source.LastIndexOf(target, StringComparison.Ordinal);
 
             //TODO: Smelly - Make -1 mean something
             return place == -1
                 ? source
-                : source.Remove(place, target.Length).Insert(place, replace);
+                : source.Remove(place, target.Length).Insert(place, _replace.String());
         }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using FluentAssertions;
 using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizza;
+using microObjectPizzaShop.Pizza.Toppers;
 using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace MicroObjectPizzaShop
 {
@@ -32,7 +30,7 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new PersonalPizza();
-            IPizza pizza = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
+            IPizza pizza = initial.AddTopping(Topping.Mozzarella);
             IDescription actual = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -40,7 +38,7 @@ namespace MicroObjectPizzaShop
             actual.Into(testWriteString);
 
             //Assert
-            testWriteString.AssertValueIs("Personal pizza with SomeTopping");
+            testWriteString.AssertValueIs("Personal pizza with Mozzarella");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -61,7 +59,7 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new PersonalPizza();
-            IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
+            IPizza subject = initial.AddTopping(Topping.Mozzarella);
 
             //Act
             Money actual = subject.Price();
@@ -77,8 +75,8 @@ namespace MicroObjectPizzaShop
             //Arrange
             IPizza initial = new PersonalPizza();
             IPizza subject = initial
-                .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
-                .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
+                .AddTopping(Topping.Mushroom)
+                .AddTopping(Topping.Mozzarella);
 
             //Act
             Money actual = subject.Price();
@@ -94,8 +92,8 @@ namespace MicroObjectPizzaShop
             //Arrange
             IPizza initial = new PersonalPizza();
             IPizza pizza = initial
-                .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
-                .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
+                .AddTopping(Topping.Mushroom)
+                .AddTopping(Topping.Mozzarella);
             IDescription actual = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -103,7 +101,7 @@ namespace MicroObjectPizzaShop
             actual.Into(testWriteString);
 
             //Assert
-            testWriteString.AssertValueIs("Personal pizza with SomeTopping and OtherTopping");
+            testWriteString.AssertValueIs("Personal pizza with Mushroom and Mozzarella");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -112,9 +110,9 @@ namespace MicroObjectPizzaShop
             //Arrange
             IPizza initial = new PersonalPizza();
             IPizza pizza = initial
-                .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
-                .AddTopping(new Topping(new TextOf("OtherTopping"), .1))
-                .AddTopping(new Topping(new TextOf("Delicious"), .1));
+                .AddTopping(Topping.Mushroom)
+                .AddTopping(Topping.Olive)
+                .AddTopping(Topping.Mozzarella);
             IDescription actual = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -122,7 +120,7 @@ namespace MicroObjectPizzaShop
             actual.Into(testWriteString);
 
             //Assert
-            testWriteString.AssertValueIs("Personal pizza with SomeTopping, OtherTopping and Delicious");
+            testWriteString.AssertValueIs("Personal pizza with Mushroom, Olive and Mozzarella");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -131,8 +129,8 @@ namespace MicroObjectPizzaShop
             //Arrange
             IPizza initial = new PersonalPizza();
             IPizza subject = initial
-                .AddTopping(new Topping(new TextOf("MeatTopping"), .15))
-                .AddTopping(new Topping(new TextOf("NonMeat"), .1));
+                .AddTopping(Topping.Bacon)
+                .AddTopping(Topping.Mushroom);
 
             //Act
             Money actual = subject.Price();
@@ -159,7 +157,7 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new FamilyPizza();
-            IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .15));
+            IPizza subject = initial.AddTopping(Topping.Bacon);
 
             //Act
             Money actual = subject.Price();
@@ -186,7 +184,7 @@ namespace MicroObjectPizzaShop
         {
             //Arrange
             IPizza initial = new PersonalPizza();
-            IPizza second = initial.AddTopping(new Topping(new TextOf("NonMeat"), .1));
+            IPizza second = initial.AddTopping(Topping.Mushroom);
 
             //Act
             Money initialPrice = initial.Price();
@@ -195,27 +193,6 @@ namespace MicroObjectPizzaShop
             //Assert
             initialPrice.Should().NotBe(secondPrice);
         }
-    }
-
-    public class Topping : ITopping
-    {
-        private readonly IText _name;
-        private readonly double _percent;
-
-        public Topping(IText name, double percent)
-        {
-            _name = name;
-            _percent = percent;
-        }
-
-        public Money Cost(Money pizzaCost) => pizzaCost % _percent;
-        public IText Name() => _name;//TODO: Smelly - encapsulation violation
-    }
-
-    public interface ITopping
-    {
-        Money Cost(Money pizzaCost);
-        IText Name();
     }
 
     public interface IPizza
@@ -260,50 +237,5 @@ namespace MicroObjectPizzaShop
         protected abstract IPizza NewPizza(IToppings toppings);
         protected abstract IText Name();
         protected abstract Money BasePrice();
-    }
-
-    public class Toppings : IToppings
-    {
-        private readonly List<ITopping> _toppings;
-
-        public Toppings() : this(new List<ITopping>()) { }
-
-        public Toppings(List<ITopping> toppings) => _toppings = toppings;
-
-        public Money Cost(Money basePrice)
-        {
-            //TODO: Smelly
-            Money result = new Money(0);
-            foreach (ITopping topping in _toppings)
-            {
-                result += topping.Cost(basePrice);
-            }
-            return result;
-        }
-
-        public bool Empty() => !_toppings.Any();
-        public IToppings Add(ITopping topping)
-        {
-            List<ITopping> toppings = new List<ITopping>();
-            toppings.AddRange(_toppings);
-            toppings.Add(topping);
-            return new Toppings(toppings);
-        }
-
-        public IText Joined() => new SentenceJoinToppings(this);
-        public bool Single() => _toppings.Count == 1;
-        public bool Double() => _toppings.Count == 2;
-
-        public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-    }
-
-    public interface IToppings : IEnumerable<ITopping>
-    {
-        Money Cost(Money basePrice);
-        bool Empty();
-        IToppings Add(ITopping topping);
-        IText Joined();
-        bool Single();
     }
 }
