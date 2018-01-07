@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Library.Texts;
 using microObjectPizzaShop.Pizza;
 using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -289,14 +289,20 @@ namespace MicroObjectPizzaShop
             return new Toppings(toppings);
         }
 
-        public IText Joined() => new SentenceJoinToppings(_toppings);
+        public IText Joined() => new SentenceJoinToppings(this);
+        public bool Single() => _toppings.Count == 1;
+        public bool Double() => _toppings.Count == 2;
+
+        public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    public interface IToppings
+    public interface IToppings : IEnumerable<ITopping>
     {
         Money Cost(Money basePrice);
         bool Empty();
         IToppings Add(ITopping topping);
         IText Joined();
+        bool Single();
     }
 }

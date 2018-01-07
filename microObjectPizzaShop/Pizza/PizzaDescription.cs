@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using microObjectPizzaShop.Library;
+﻿using microObjectPizzaShop.Library;
 using MicroObjectPizzaShop;
 using MicroObjectPizzaShop.Library.Texts;
+using System.Collections.Generic;
 
-namespace microObjectPizzaShop.Pizza {
+namespace microObjectPizzaShop.Pizza
+{
     public class PizzaDescription : IDescription
     {
         private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");
@@ -42,5 +43,10 @@ namespace microObjectPizzaShop.Pizza {
             item.Write(new FormatText(NoToppingsFormat, _type).String());
             return true;
         }
+    }
+
+    public interface IDescription
+    {
+        void Into(IWriteString item);
     }
 }
