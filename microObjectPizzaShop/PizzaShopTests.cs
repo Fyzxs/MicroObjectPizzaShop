@@ -11,26 +11,7 @@ namespace MicroObjectPizzaShop
     public class PizzaShopTests
     {
         [TestMethod, TestCategory("unit")]
-        public void ShouldImplementIPizza()
-        {
-            IPizza subject = new Pizza();
-        }
-
-        [TestMethod, TestCategory("unit")]
-        public void ShouldAddTopping()
-        {
-            //Arrange
-            IPizza subject = new Pizza();
-
-            //Act
-            IPizza actual = subject.AddTopping(new TextOf("SomeTopping"));
-
-            //Assert
-            actual.Should().NotBeNull();
-        }
-
-        [TestMethod, TestCategory("unit")]
-        public void ShouldDisplayDescription()
+        public void ShouldDisplayDescriptionWithNoToppings()
         {
             //Arrange
             IPizza subject = new Pizza();
@@ -56,7 +37,7 @@ namespace MicroObjectPizzaShop
         }
 
         [TestMethod, TestCategory("unit")]
-        public void ShouldProvidePrice()
+        public void ShouldProvidePriceWithNoTopping()
         {
             //Arrange
             IPizza subject = new Pizza();
