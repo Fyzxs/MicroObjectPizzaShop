@@ -4,10 +4,10 @@ namespace MicroObjectPizzaShop.Library.Texts
 {
     public class FormatText : Text
     {
-        private readonly Text _format;
-        private readonly Text[] _args;
+        private readonly IText _format;
+        private readonly IText[] _args;
 
-        public FormatText(Text format, params Text[] args)
+        public FormatText(IText format, params IText[] args)
         {
             _format = format;
             _args = args;

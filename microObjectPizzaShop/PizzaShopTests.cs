@@ -33,7 +33,7 @@ namespace MicroObjectPizzaShop
             IPizza subject = new Pizza();
 
             //Act
-            Text actual = subject.Description();
+            IText actual = subject.Description();
 
             //Assert
             actual.String().Should().Be("Personal pizza");
@@ -46,7 +46,7 @@ namespace MicroObjectPizzaShop
             IPizza initial = new Pizza();
             IPizza subject = initial.AddTopping(new TextOf("SomeTopping"));
             //Act
-            Text actual = subject.Description();
+            IText actual = subject.Description();
 
             //Assert
             actual.String().Should().Be("Personal pizza with SomeTopping");
@@ -59,36 +59,36 @@ namespace MicroObjectPizzaShop
             IPizza subject = new Pizza();
 
             //Act
-            double val = subject.Price();
+            IText val = subject.Price();
 
             //Assert
-            val.Should().Be(9.00)
+            val.String().Should().Be("$9.00");
         }
     }
     public interface IPizza
     {
-        IPizza AddTopping(Text topping);
-        Text Description();
-        double Price();
+        IPizza AddTopping(IText topping);
+        IText Description();
+        IText Price();
     }
 
     public class Pizza : IPizza
     {
-        private static readonly Text PizzaType = new TextOf("Personal pizza");
-        private static readonly Text Format = new TextOf("{0} with {1}");
+        private static readonly IText PizzaType = new TextOf("Personal pizza");
+        private static readonly IText Format = new TextOf("{0} with {1}");
 
-        private readonly Text _topping;
+        private readonly IText _topping;
 
         public Pizza() : this(new EmptyText()) { }
-        private Pizza(Text topping) => _topping = topping;
+        private Pizza(IText topping) => _topping = topping;
 
-        public IPizza AddTopping(Text topping) => new Pizza(topping);
-        public Text Description()
+        public IPizza AddTopping(IText topping) => new Pizza(topping);
+        public IText Description()
         {
             if (_topping.IsEmpty()) return PizzaType;
             return new FormatText(Format, PizzaType, _topping);
         }
 
-        public double Price() => 9d;
+        public IText Price() => new TextOf("$9.00");
     }
 }
