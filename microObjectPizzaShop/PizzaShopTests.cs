@@ -210,7 +210,6 @@ namespace MicroObjectPizzaShop
 
         public Money Cost(Money pizzaCost) => pizzaCost % _percent;
         public IText Name() => _name;
-        public void NameInto(IWriteString item) => item.Write(_name.String());
     }
 
     public interface ITopping

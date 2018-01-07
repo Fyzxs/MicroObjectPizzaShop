@@ -11,8 +11,6 @@ namespace MicroObjectPizzaShop.Library.Texts
             private readonly Func<string> _origin;
             public DelayedText(Func<string> origin) => _origin = origin;
             public string String() => _origin();
-
-            public bool IsEmpty() => throw new NotImplementedException("Should never get invoked.");
         }
 
         public TextOf(string origin) : this(new DelayedText(() => origin)) { }
