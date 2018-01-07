@@ -89,10 +89,40 @@ namespace MicroObjectPizzaShop
             IPizza subject = initial.AddTopping(new TextOf("SomeTopping")).AddTopping(new TextOf("OtherTopping"));
 
             //Act
-            IText val = subject.Price();
+            IText actual = subject.Price();
 
             //Assert
-            val.String().Should().Be("$10.80");
+            actual.String().Should().Be("$10.80");
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvideDescriptionWithTwoToppings()
+        {
+            //Arrange
+            IPizza initial = new Pizza();
+            IPizza subject = initial.AddTopping(new TextOf("SomeTopping")).AddTopping(new TextOf("OtherTopping"));
+
+            //Act
+            IText actual = subject.Description();
+
+            //Assert
+            actual.String().Should().Be("Personal pizza with SomeTopping and OtherTopping");
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvideDescriptionWithThreeToppings()
+        {
+            //Arrange
+            IPizza initial = new Pizza();
+            IPizza subject = initial.AddTopping(new TextOf("SomeTopping"))
+                .AddTopping(new TextOf("OtherTopping"))
+                .AddTopping(new TextOf("Delicious"));
+
+            //Act
+            IText actual = subject.Description();
+
+            //Assert
+            actual.String().Should().Be("Personal pizza with SomeTopping, OtherTopping and Delicious");
         }
     }
     public interface IPizza
@@ -121,11 +151,31 @@ namespace MicroObjectPizzaShop
         public IText Description()
         {
             if (!_toppings.Any()) return PizzaType;
-            List<IText> texts = new List<IText> { PizzaType };
-            texts.AddRange(_toppings);
+            List<IText> texts = new List<IText> { PizzaType, new SentenceJoinTexts(_toppings) };
             return new FormatText(Format, texts.ToArray());
         }
 
         public IText Price() => new TextOf(( 9 + _toppings.Count * .9 ).ToString("C"));
+    }
+
+    public class SentenceJoinTexts : Text
+    {
+        private readonly List<IText> _toppings;
+
+        public SentenceJoinTexts(List<IText> toppings) => _toppings = toppings;
+
+        public override string String()
+        {
+            if (_toppings.Count == 0) return string.Empty;
+            if (_toppings.Count == 1) return _toppings.First().String();
+
+            string build = _toppings.First().String();
+            for (int idx = 1; idx < _toppings.Count - 1; idx++)
+            {
+                build += ", " + _toppings[idx].String();
+            }
+
+            return build + " and " + _toppings.Last().String();
+        }
     }
 }
