@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace microObjectPizzaShop.Library
+namespace MicroObjectPizzaShop.Library.Texts
 {
     public class FormatText : Text
     {

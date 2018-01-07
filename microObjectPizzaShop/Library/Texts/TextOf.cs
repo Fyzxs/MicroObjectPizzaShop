@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace microObjectPizzaShop.Library
+namespace MicroObjectPizzaShop.Library.Texts
 {
     public class TextOf : Text
     {

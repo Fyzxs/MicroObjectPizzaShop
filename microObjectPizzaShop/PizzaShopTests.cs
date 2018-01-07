@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using microObjectPizzaShop.Library;
+using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace microObjectPizzaShop
+namespace MicroObjectPizzaShop
 {
     [TestClass]
     public class PizzaShopTests
@@ -51,11 +51,25 @@ namespace microObjectPizzaShop
             //Assert
             actual.String().Should().Be("Personal pizza with SomeTopping");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvidePrice()
+        {
+            //Arrange
+            IPizza subject = new Pizza();
+
+            //Act
+            double val = subject.Price();
+
+            //Assert
+            val.Should().Be(9.00)
+        }
     }
     public interface IPizza
     {
         IPizza AddTopping(Text topping);
         Text Description();
+        double Price();
     }
 
     public class Pizza : IPizza
@@ -74,5 +88,7 @@ namespace microObjectPizzaShop
             if (_topping.IsEmpty()) return PizzaType;
             return new FormatText(Format, PizzaType, _topping);
         }
+
+        public double Price() => 9d;
     }
 }

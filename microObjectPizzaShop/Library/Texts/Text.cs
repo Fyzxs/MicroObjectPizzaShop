@@ -1,4 +1,4 @@
-﻿namespace microObjectPizzaShop.Library
+﻿namespace MicroObjectPizzaShop.Library.Texts
 {
     public abstract class Text : IText
     {

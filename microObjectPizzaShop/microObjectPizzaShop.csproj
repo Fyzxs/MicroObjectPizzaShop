@@ -56,11 +56,11 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\EmptyText.cs" />
-    <Compile Include="Library\FormatText.cs" />
-    <Compile Include="Library\IScalar.cs" />
-    <Compile Include="Library\Text.cs" />
-    <Compile Include="Library\TextOf.cs" />
+    <Compile Include="Library\Texts\EmptyText.cs" />
+    <Compile Include="Library\Texts\FormatText.cs" />
+    <Compile Include="Library\Texts\IScalar.cs" />
+    <Compile Include="Library\Texts\Text.cs" />
+    <Compile Include="Library\Texts\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
