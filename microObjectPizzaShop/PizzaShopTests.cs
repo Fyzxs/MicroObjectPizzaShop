@@ -1,5 +1,7 @@
 ﻿using FluentAssertions;
+using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Library.Texts;
+using microObjectPizzaShop.Pizza;
 using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -16,13 +18,13 @@ namespace MicroObjectPizzaShop
             //Arrange
             IPizza pizza = new PersonalPizza();
             IDescription actual = pizza.Description();
-            TestWriteText testWriteText = new TestWriteText();
+            TestWriteString testWriteString = new TestWriteString();
 
             //Act
-            actual.Into(testWriteText);
+            actual.Into(testWriteString);
 
             //Assert
-            testWriteText.AssertValueIs("Personal pizza");
+            testWriteString.AssertValueIs("Personal pizza");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -32,13 +34,13 @@ namespace MicroObjectPizzaShop
             IPizza initial = new PersonalPizza();
             IPizza pizza = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
             IDescription actual = pizza.Description();
-            TestWriteText testWriteText = new TestWriteText();
+            TestWriteString testWriteString = new TestWriteString();
 
             //Act
-            actual.Into(testWriteText);
+            actual.Into(testWriteString);
 
             //Assert
-            testWriteText.AssertValueIs("Personal pizza with SomeTopping");
+            testWriteString.AssertValueIs("Personal pizza with SomeTopping");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -48,10 +50,10 @@ namespace MicroObjectPizzaShop
             IPizza subject = new PersonalPizza();
 
             //Act
-            IText val = subject.Price();
+            Money actual = subject.Price();
 
             //Assert
-            val.String().Should().Be("$9.00");
+            actual.Should().Be(new Money(9.00));
         }
 
         [TestMethod, TestCategory("unit")]
@@ -62,10 +64,11 @@ namespace MicroObjectPizzaShop
             IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .1));
 
             //Act
-            IText val = subject.Price();
+            Money actual = subject.Price();
 
             //Assert
-            val.String().Should().Be("$9.90");
+            actual.Should().Be(new Money(9.90));
+
         }
 
         [TestMethod, TestCategory("unit")]
@@ -78,10 +81,11 @@ namespace MicroObjectPizzaShop
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
 
             //Act
-            IText actual = subject.Price();
+            Money actual = subject.Price();
 
             //Assert
-            actual.String().Should().Be("$10.80");
+            actual.Should().Be(new Money(10.80));
+
         }
 
         [TestMethod, TestCategory("unit")]
@@ -93,13 +97,13 @@ namespace MicroObjectPizzaShop
                 .AddTopping(new Topping(new TextOf("SomeTopping"), .1))
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1));
             IDescription actual = pizza.Description();
-            TestWriteText testWriteText = new TestWriteText();
+            TestWriteString testWriteString = new TestWriteString();
 
             //Act
-            actual.Into(testWriteText);
+            actual.Into(testWriteString);
 
             //Assert
-            testWriteText.AssertValueIs("Personal pizza with SomeTopping and OtherTopping");
+            testWriteString.AssertValueIs("Personal pizza with SomeTopping and OtherTopping");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -112,13 +116,13 @@ namespace MicroObjectPizzaShop
                 .AddTopping(new Topping(new TextOf("OtherTopping"), .1))
                 .AddTopping(new Topping(new TextOf("Delicious"), .1));
             IDescription actual = pizza.Description();
-            TestWriteText testWriteText = new TestWriteText();
+            TestWriteString testWriteString = new TestWriteString();
 
             //Act
-            actual.Into(testWriteText);
+            actual.Into(testWriteString);
 
             //Assert
-            testWriteText.AssertValueIs("Personal pizza with SomeTopping, OtherTopping and Delicious");
+            testWriteString.AssertValueIs("Personal pizza with SomeTopping, OtherTopping and Delicious");
         }
 
         [TestMethod, TestCategory("unit")]
@@ -131,37 +135,37 @@ namespace MicroObjectPizzaShop
                 .AddTopping(new Topping(new TextOf("NonMeat"), .1));
 
             //Act
-            IText val = subject.Price();
+            Money actual = subject.Price();
 
             //Assert
-            val.String().Should().Be("$11.25");
+            actual.Should().Be(new Money(11.25));
         }
 
         [TestMethod, TestCategory("unit")]
-        public void ShouldHaveFamilyPizza()
+        public void ShouldHaveFamilyPizzaPriceWithNoTopping()
         {
             //Arrange
             IPizza subject = new FamilyPizza();
 
             //Act
-            IText actual = subject.Price();
+            Money actual = subject.Price();
 
             //Assert
-            actual.String().Should().Be("$18.00");
+            actual.Should().Be(new Money(18.00));
         }
 
         [TestMethod, TestCategory("unit")]
-        public void ShouldProvideFamilyPriceWithTopping()
+        public void ShouldHaveFamilyPriceWithTopping()
         {
             //Arrange
             IPizza initial = new FamilyPizza();
             IPizza subject = initial.AddTopping(new Topping(new TextOf("SomeTopping"), .15));
 
             //Act
-            IText val = subject.Price();
+            Money actual = subject.Price();
 
             //Assert
-            val.String().Should().Be("$20.70");
+            actual.Should().Be(new Money(20.70));
         }
         [TestMethod, TestCategory("unit")]
         public void ShouldDisplayFamilyDescriptionWithNoToppings()
@@ -170,13 +174,13 @@ namespace MicroObjectPizzaShop
             IPizza pizza = new FamilyPizza();
             IDescription subject = pizza.Description();
 
-            TestWriteText testWriteText = new TestWriteText();
+            TestWriteString testWriteString = new TestWriteString();
 
             //Act
-            subject.Into(testWriteText);
+            subject.Into(testWriteString);
 
             //Assert
-            testWriteText.AssertValueIs("Family pizza");
+            testWriteString.AssertValueIs("Family pizza");
         }
         [TestMethod, TestCategory("unit")]
         public void ShouldHaveImmutableToppings()
@@ -186,11 +190,11 @@ namespace MicroObjectPizzaShop
             IPizza second = initial.AddTopping(new Topping(new TextOf("NonMeat"), .1));
 
             //Act
-            IText initialPrice = initial.Price();
-            IText secondPrice = second.Price();
+            Money initialPrice = initial.Price();
+            Money secondPrice = second.Price();
 
             //Assert
-            initialPrice.String().Should().NotBe(secondPrice.String());
+            initialPrice.Should().NotBe(secondPrice);
         }
     }
 
@@ -205,21 +209,43 @@ namespace MicroObjectPizzaShop
             _percent = percent;
         }
 
-        public double Cost(double pizzaCost) => pizzaCost * _percent;
+        public Money Cost(Money pizzaCost) => pizzaCost % _percent;
         public IText Name() => _name;
+        public void NameInto(IWriteString item) => item.Write(_name.String());
     }
 
     public interface ITopping
     {
-        double Cost(double pizzaCost);
+        Money Cost(Money pizzaCost);
         IText Name();
     }
 
     public interface IPizza
     {
         IDescription Description();
-        IText Price();
+        Money Price();
         IPizza AddTopping(ITopping topping);
+    }
+
+
+    public class Money
+    {
+        public override bool Equals(object other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            if (GetType() != other.GetType()) return false;
+            return Equals((Money) other);
+        }
+        protected bool Equals(Money other) => _amount.Equals(other._amount);
+
+        public override int GetHashCode() => _amount.GetHashCode();
+
+        private readonly double _amount;
+        public Money(double amount) => _amount = amount;
+        public void Into(IWriteString item) => item.Write(_amount.ToString("C"));
+        public static Money operator +(Money lhs, Money rhs) => new Money(lhs._amount + rhs._amount);
+        public static Money operator %(Money lhs, double pct) => new Money(lhs._amount * pct);
     }
 
 
@@ -229,7 +255,7 @@ namespace MicroObjectPizzaShop
         public FamilyPizza(IToppings toppings) : base(toppings) { }
 
         protected override IText Name() => new TextOf("Family");
-        protected override double BasePrice() => 18;
+        protected override Money BasePrice() => new Money(18);
         protected override IPizza NewPizza(IToppings toppings) => new FamilyPizza(toppings);
     }
 
@@ -239,7 +265,7 @@ namespace MicroObjectPizzaShop
         public PersonalPizza(IToppings toppings) : base(toppings) { }
 
         protected override IText Name() => new TextOf("Personal");
-        protected override double BasePrice() => 9;
+        protected override Money BasePrice() => new Money(9);
         protected override IPizza NewPizza(IToppings toppings) => new PersonalPizza(toppings);
     }
 
@@ -253,69 +279,20 @@ namespace MicroObjectPizzaShop
 
         public IPizza AddTopping(ITopping topping) => NewPizza(_toppings.Add(topping));
 
-        public IText Price() => new TextOf(( BasePrice() + _toppings.Cost(BasePrice()) ).ToString("C"));
+        public Money Price() => BasePrice() + _toppings.Cost(BasePrice());
 
         protected abstract IPizza NewPizza(IToppings toppings);
         protected abstract IText Name();
-        protected abstract double BasePrice();
+        protected abstract Money BasePrice();
     }
 
-    public class PizzaDescription : IDescription
-    {
-        private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");
-        private static readonly IText MultipleToppingsFormat = new TextOf("{0} pizza with {1}");
-
-        private readonly IText _type;
-        private readonly IToppings _toppings;
-
-        public PizzaDescription(IText type, IToppings toppings)
-        {
-            _type = type;
-            _toppings = toppings;
-        }
-
-        public void Into(IWriteText item)
-        {
-            if (ProcessedNoToppings(item)) return;
-
-            ProcessToppingDescription(item);
-        }
-
-        private void ProcessToppingDescription(IWriteText item)
-        {
-            List<IText> texts = new List<IText>
-            {
-                _type,
-                _toppings.SentenceJoined()
-            };
-            item.Write(new FormatText(MultipleToppingsFormat, texts.ToArray()).String());
-        }
-
-        private bool ProcessedNoToppings(IWriteText item)
-        {
-            if (!_toppings.Empty()) return false;
-
-            item.Write(new FormatText(NoToppingsFormat, _type).String());
-            return true;
-        }
-    }
-
-    public interface IWriteText
-    {
-        void Write(string value);
-    }
-    public class TestWriteText : IWriteText
+    public class TestWriteString : IWriteString
     {
         private string _value;
 
         public void Write(string value) => _value = value;
 
         public void AssertValueIs(string expected) => _value.Should().Be(expected);
-    }
-
-    public interface IDescription
-    {
-        void Into(IWriteText item);
     }
 
     public class Toppings : IToppings
@@ -326,7 +303,15 @@ namespace MicroObjectPizzaShop
 
         public Toppings(List<ITopping> toppings) => _toppings = toppings;
 
-        public double Cost(double basePrice) => _toppings.Sum(o => o.Cost(basePrice));
+        public Money Cost(Money basePrice)
+        {
+            Money result = new Money(0);
+            foreach (ITopping topping in _toppings)
+            {
+                result = result + topping.Cost(basePrice);
+            }
+            return result;
+        }
 
         public bool Empty() => !_toppings.Any();
         public IToppings Add(ITopping topping)
@@ -342,7 +327,7 @@ namespace MicroObjectPizzaShop
 
     public interface IToppings
     {
-        double Cost(double basePrice);
+        Money Cost(Money basePrice);
         bool Empty();
         IToppings Add(ITopping topping);
         IText SentenceJoined();
