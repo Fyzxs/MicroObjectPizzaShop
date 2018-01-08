@@ -8,7 +8,6 @@ namespace microObjectPizzaShop.Pizza.Toppers
     {
         private readonly IText _origin;
 
-        //TODO: Smelly - Logic in Ctor
         public SentenceJoinToppings(IToppings toppings) : this(new ToppingRebaseToText(toppings)) { }
         public SentenceJoinToppings(IEnumerable<IText> toppingNames) : this(new SentenceJoinText(toppingNames)) { }
         public SentenceJoinToppings(IText origin) => _origin = origin;
