@@ -12,22 +12,22 @@ namespace microObjectPizzaShop.Pizza.Toppers
         public static readonly ITopping Bacon = new MeatTopping("Bacon");
         public static readonly ITopping Ham = new MeatTopping("Ham");
 
-        private readonly IText _name;
+        private readonly string _name;
 
-        protected Topping(IText name) => _name = name;
+        protected Topping(string name) => _name = name;
 
         public Money Cost(Money pizzaCost) => pizzaCost % PercentCost();
-        public IText Name() => _name;//TODO: Smelly - encapsulation violation
+        public IText Name() => new TextOf(_name);
         protected abstract double PercentCost();
 
         private class RegularTopping : Topping
         {
-            public RegularTopping(string name) : base(new TextOf(name)) { }
+            public RegularTopping(string name) : base(name) { }
             protected override double PercentCost() => .1;
         }
         private class MeatTopping : Topping
         {
-            public MeatTopping(string name) : base(new TextOf(name)) { }
+            public MeatTopping(string name) : base(name) { }
             protected override double PercentCost() => .15;
         }
     }
