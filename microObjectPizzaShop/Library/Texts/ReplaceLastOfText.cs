@@ -24,7 +24,6 @@ namespace microObjectPizzaShop.Library.Texts
 
             int place = source.LastIndexOf(target, StringComparison.Ordinal);
 
-            //TODO: Smelly - Make -1 mean something
             return place == NotFound
                 ? source
                 : source.Remove(place, target.Length).Insert(place, _replace.String());
