@@ -27,4 +27,8 @@ namespace microObjectPizzaShop.Library.Texts
             return new DelayedFormatText(_format, args);
         }
     }
+    public interface IDelayedFormatText : IText
+    {
+        IDelayedFormatText Add(IText arg);
+    }
 }

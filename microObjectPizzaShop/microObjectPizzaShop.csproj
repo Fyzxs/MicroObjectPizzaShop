@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Library\IWriteString.cs" />
     <Compile Include="Library\Money.cs" />
+    <Compile Include="Library\Texts\DelayedFormatText.cs" />
     <Compile Include="Library\Texts\EmptyText.cs" />
     <Compile Include="Library\Texts\FormatText.cs" />
     <Compile Include="Library\Texts\JoinText.cs" />

@@ -35,6 +35,7 @@ namespace microObjectPizzaShop.Pizza.Toppers
         }
 
         public IText Joined() => new SentenceJoinToppings(this);
+
         public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

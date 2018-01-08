@@ -207,7 +207,7 @@ namespace MicroObjectPizzaShop
         public FamilyPizza() : this(new Toppings()) { }
         public FamilyPizza(IToppings toppings) : base(toppings) { }
 
-        protected override IText Name() => new TextOf("Family");
+        protected override IPizzaType Type() => PizzaType.Family;
         protected override Money BasePrice() => new Money(18);
         protected override IPizza NewPizza(IToppings toppings) => new FamilyPizza(toppings);
     }
@@ -217,7 +217,7 @@ namespace MicroObjectPizzaShop
         public PersonalPizza() : this(new Toppings()) { }
         public PersonalPizza(IToppings toppings) : base(toppings) { }
 
-        protected override IText Name() => new TextOf("Personal");
+        protected override IPizzaType Type() => PizzaType.Personal;
         protected override Money BasePrice() => new Money(9);
         protected override IPizza NewPizza(IToppings toppings) => new PersonalPizza(toppings);
     }
@@ -228,14 +228,29 @@ namespace MicroObjectPizzaShop
 
         protected Pizza(IToppings toppings) => _toppings = toppings;
 
-        public IDescription Description() => new PizzaDescription(Name(), _toppings);
+        public IDescription Description() => new PizzaDescription(Type(), _toppings);
 
         public IPizza AddTopping(ITopping topping) => NewPizza(_toppings.Add(topping));
 
         public Money Price() => BasePrice() + _toppings.Cost(BasePrice());
 
         protected abstract IPizza NewPizza(IToppings toppings);
-        protected abstract IText Name();
+        protected abstract IPizzaType Type();
         protected abstract Money BasePrice();
+    }
+
+    public interface IPizzaType : IText { }
+
+    public class PizzaType : IPizzaType
+    {
+        public static readonly IPizzaType Family = new PizzaType("Family");
+        public static readonly IPizzaType Personal = new PizzaType("Personal");
+
+        private readonly IText _type;
+
+        private PizzaType(string type) : this(new TextOf(type)) { }
+        private PizzaType(IText type) => _type = type;
+
+        public string String() => _type.String();
     }
 }
