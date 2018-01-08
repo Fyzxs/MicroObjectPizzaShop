@@ -67,7 +67,11 @@
     <Compile Include="Library\Texts\IText.cs" />
     <Compile Include="Library\Texts\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />
-    <Compile Include="Pizza\PizzaDescription.cs" />
+    <Compile Include="Pizza\Description\Actions\IPizzaDescriptionAction.cs" />
+    <Compile Include="Pizza\Description\Actions\NoToppingsPizzaDescriptionAction.cs" />
+    <Compile Include="Pizza\Description\PizzaDescription.cs" />
+    <Compile Include="Pizza\Description\Actions\PizzaDescriptionAction.cs" />
+    <Compile Include="Pizza\Description\Actions\ToppingsPizzaDescriptionAction.cs" />
     <Compile Include="Pizza\Toppers\SentenceJoinToppings.cs" />
     <Compile Include="Pizza\Toppers\Topping.cs" />
     <Compile Include="Pizza\Toppers\ToppingRebaseToText.cs" />
@@ -78,6 +82,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizza;
+using microObjectPizzaShop.Pizza.Description;
 using microObjectPizzaShop.Pizza.Toppers;
 using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
