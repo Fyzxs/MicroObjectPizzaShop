@@ -16,7 +16,7 @@ namespace microObjectPizzaShop.Pizza.Toppers
 
         public Money Cost(Money basePrice)
         {
-            //TODO: Smelly
+            //TODO: Smelly - Looping vs LINQ
             Money result = new Money(0);
             foreach (ITopping topping in _toppings)
             {
@@ -35,9 +35,6 @@ namespace microObjectPizzaShop.Pizza.Toppers
         }
 
         public IText Joined() => new SentenceJoinToppings(this);
-        public bool Single() => _toppings.Count == 1;
-        public bool Double() => _toppings.Count == 2;
-
         public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
@@ -47,6 +44,5 @@ namespace microObjectPizzaShop.Pizza.Toppers
         bool Empty();
         IToppings Add(ITopping topping);
         IText Joined();
-        bool Single();
     }
 }
