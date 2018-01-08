@@ -14,16 +14,7 @@ namespace microObjectPizzaShop.Pizza.Toppers
 
         public Toppings(List<ITopping> toppings) => _toppings = toppings;
 
-        public Money Cost(Money basePrice)
-        {
-            //TODO: Smelly - Looping vs LINQ
-            Money result = new Money(0);
-            foreach (ITopping topping in _toppings)
-            {
-                result += topping.Cost(basePrice);
-            }
-            return result;
-        }
+        public Money Cost(Money basePrice) => _toppings.Aggregate(new Money(0), (m, t) => m + t.Cost(basePrice));
 
         public bool Empty() => !_toppings.Any();
         public IToppings Add(ITopping topping)
