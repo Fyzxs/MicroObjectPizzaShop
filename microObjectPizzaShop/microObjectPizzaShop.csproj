@@ -59,11 +59,9 @@
     <Compile Include="Library\IWriteString.cs" />
     <Compile Include="Library\Money.cs" />
     <Compile Include="Library\Numeric\IInteger.cs" />
-    <Compile Include="Library\Numeric\IntegerOf.cs" />
     <Compile Include="Library\Numeric\LastIndexOf.cs" />
     <Compile Include="Library\Numeric\LengthOf.cs" />
     <Compile Include="Library\Texts\DelayedFormatText.cs" />
-    <Compile Include="Library\Texts\EmptyText.cs" />
     <Compile Include="Library\Texts\FormatText.cs" />
     <Compile Include="Library\Texts\InsertText.cs" />
     <Compile Include="Library\Texts\JoinText.cs" />

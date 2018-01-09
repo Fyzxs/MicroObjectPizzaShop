@@ -9,7 +9,6 @@ namespace microObjectPizzaShop.Library.Texts
         private readonly IText _format;
         private readonly IList<IText> _args;
         public DelayedFormatText(IText format, IText arg) : this(format, new List<IText> { arg }) { }
-        public DelayedFormatText(IText format) : this(format, new List<IText>()) { }
 
         public DelayedFormatText(IText format, IList<IText> args)
         {
