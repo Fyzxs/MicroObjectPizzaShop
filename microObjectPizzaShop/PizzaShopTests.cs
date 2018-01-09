@@ -193,5 +193,30 @@ namespace MicroObjectPizzaShop
             //Assert
             initialPrice.Should().NotBe(secondPrice);
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldDisplayMediumDescriptionWithNoToppings()
+        {
+            //Arrange
+            IPizza pizza = new MediumPizza();
+            IDescription subject = pizza.Description();
+            TestWriteString testWriteString = new TestWriteString();
+
+            //Act
+            subject.Into(testWriteString);
+
+            //Assert
+            testWriteString.AssertValueIs("Medium pizza");
+        }
+    }
+
+    public class MediumPizza : Pizza
+    {
+        public MediumPizza() : this(new Toppings()) { }
+        public MediumPizza(IToppings toppings) : base(toppings) { }
+
+        protected override IPizzaType Type() => PizzaType.Medium;
+        protected override Money BasePrice() => new Money(18);
+        protected override IPizza NewPizza(IToppings toppings) => new LargePizza(toppings);
     }
 }
