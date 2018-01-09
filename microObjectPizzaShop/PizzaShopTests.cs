@@ -143,7 +143,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveFamilyPizzaPriceWithNoTopping()
         {
             //Arrange
-            IPizza subject = new FamilyPizza();
+            IPizza subject = new LargePizza();
 
             //Act
             Money actual = subject.Price();
@@ -156,7 +156,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveFamilyPriceWithTopping()
         {
             //Arrange
-            IPizza initial = new FamilyPizza();
+            IPizza initial = new LargePizza();
             IPizza subject = initial.AddTopping(Topping.Bacon);
 
             //Act
@@ -169,7 +169,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayFamilyDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza pizza = new FamilyPizza();
+            IPizza pizza = new LargePizza();
             IDescription subject = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
