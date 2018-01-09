@@ -208,6 +208,33 @@ namespace MicroObjectPizzaShop
             //Assert
             testWriteString.AssertValueIs("Medium pizza");
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveMediumPizzaPriceWithNoTopping()
+        {
+            //Arrange
+            IPizza subject = new MediumPizza();
+
+            //Act
+            Money actual = subject.Price();
+
+            //Assert
+            actual.Should().Be(new Money(13.00));
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveMediumPriceWithTopping()
+        {
+            //Arrange
+            IPizza initial = new MediumPizza();
+            IPizza subject = initial.AddTopping(Topping.Bacon);
+
+            //Act
+            Money actual = subject.Price();
+
+            //Assert
+            actual.Should().Be(new Money(14.95));
+        }
     }
 
     public class MediumPizza : Pizza
@@ -216,7 +243,7 @@ namespace MicroObjectPizzaShop
         public MediumPizza(IToppings toppings) : base(toppings) { }
 
         protected override IPizzaType Type() => PizzaType.Medium;
-        protected override Money BasePrice() => new Money(18);
-        protected override IPizza NewPizza(IToppings toppings) => new LargePizza(toppings);
+        protected override Money BasePrice() => new Money(13.00);
+        protected override IPizza NewPizza(IToppings toppings) => new MediumPizza(toppings);
     }
 }
