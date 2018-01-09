@@ -8,7 +8,7 @@ namespace microObjectPizzaShop.Pizza
         public LargePizza() : this(new Toppings()) { }
         public LargePizza(IToppings toppings) : base(toppings) { }
 
-        protected override IPizzaType Type() => PizzaType.Family;
+        protected override IPizzaType Type() => PizzaType.Large;
         protected override Money BasePrice() => new Money(18);
         protected override IPizza NewPizza(IToppings toppings) => new LargePizza(toppings);
     }
