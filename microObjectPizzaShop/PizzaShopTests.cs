@@ -140,7 +140,7 @@ namespace MicroObjectPizzaShop
         }
 
         [TestMethod, TestCategory("unit")]
-        public void ShouldHaveFamilyPizzaPriceWithNoTopping()
+        public void ShouldHaveLargePizzaPriceWithNoTopping()
         {
             //Arrange
             IPizza subject = new LargePizza();
@@ -153,7 +153,7 @@ namespace MicroObjectPizzaShop
         }
 
         [TestMethod, TestCategory("unit")]
-        public void ShouldHaveFamilyPriceWithTopping()
+        public void ShouldHaveLargePriceWithTopping()
         {
             //Arrange
             IPizza initial = new LargePizza();
@@ -166,7 +166,7 @@ namespace MicroObjectPizzaShop
             actual.Should().Be(new Money(20.70));
         }
         [TestMethod, TestCategory("unit")]
-        public void ShouldDisplayFamilyDescriptionWithNoToppings()
+        public void ShouldDisplayLargeDescriptionWithNoToppings()
         {
             //Arrange
             IPizza pizza = new LargePizza();
