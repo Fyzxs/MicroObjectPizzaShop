@@ -76,6 +76,12 @@
     <Compile Include="Pizza\Description\PizzaDescription.cs" />
     <Compile Include="Pizza\Description\Actions\PizzaDescriptionAction.cs" />
     <Compile Include="Pizza\Description\Actions\ToppingsPizzaDescriptionAction.cs" />
+    <Compile Include="Pizza\FamilyPizza.cs" />
+    <Compile Include="Pizza\IPizza.cs" />
+    <Compile Include="Pizza\IPizzaType.cs" />
+    <Compile Include="Pizza\PersonalPizza.cs" />
+    <Compile Include="Pizza\Pizza.cs" />
+    <Compile Include="Pizza\PizzaType.cs" />
     <Compile Include="Pizza\Toppers\SentenceJoinToppings.cs" />
     <Compile Include="Pizza\Toppers\Topping.cs" />
     <Compile Include="Pizza\Toppers\ToppingRebaseToText.cs" />

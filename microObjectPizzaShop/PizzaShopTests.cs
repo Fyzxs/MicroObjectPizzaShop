@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
 using microObjectPizzaShop.Library;
+using microObjectPizzaShop.Pizza;
 using microObjectPizzaShop.Pizza.Description;
 using microObjectPizzaShop.Pizza.Toppers;
-using MicroObjectPizzaShop.Library.Texts;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MicroObjectPizzaShop
@@ -177,7 +177,7 @@ namespace MicroObjectPizzaShop
             subject.Into(testWriteString);
 
             //Assert
-            testWriteString.AssertValueIs("Family pizza");
+            testWriteString.AssertValueIs("Large pizza");
         }
         [TestMethod, TestCategory("unit")]
         public void ShouldHaveImmutableToppings()
@@ -193,64 +193,5 @@ namespace MicroObjectPizzaShop
             //Assert
             initialPrice.Should().NotBe(secondPrice);
         }
-    }
-
-    public interface IPizza
-    {
-        IDescription Description();
-        Money Price();
-        IPizza AddTopping(ITopping topping);
-    }
-
-    public class FamilyPizza : PersonalPizza
-    {
-        public FamilyPizza() : this(new Toppings()) { }
-        public FamilyPizza(IToppings toppings) : base(toppings) { }
-
-        protected override IPizzaType Type() => PizzaType.Family;
-        protected override Money BasePrice() => new Money(18);
-        protected override IPizza NewPizza(IToppings toppings) => new FamilyPizza(toppings);
-    }
-
-    public class PersonalPizza : Pizza
-    {
-        public PersonalPizza() : this(new Toppings()) { }
-        public PersonalPizza(IToppings toppings) : base(toppings) { }
-
-        protected override IPizzaType Type() => PizzaType.Personal;
-        protected override Money BasePrice() => new Money(9);
-        protected override IPizza NewPizza(IToppings toppings) => new PersonalPizza(toppings);
-    }
-
-    public abstract class Pizza : IPizza
-    {
-        private readonly IToppings _toppings;
-
-        protected Pizza(IToppings toppings) => _toppings = toppings;
-
-        public IDescription Description() => new PizzaDescription(Type(), _toppings);
-
-        public IPizza AddTopping(ITopping topping) => NewPizza(_toppings.Add(topping));
-
-        public Money Price() => BasePrice() + _toppings.Cost(BasePrice());
-
-        protected abstract IPizza NewPizza(IToppings toppings);
-        protected abstract IPizzaType Type();
-        protected abstract Money BasePrice();
-    }
-
-    public interface IPizzaType : IText { }
-
-    public class PizzaType : IPizzaType
-    {
-        public static readonly IPizzaType Family = new PizzaType("Family");
-        public static readonly IPizzaType Personal = new PizzaType("Personal");
-
-        private readonly IText _type;
-
-        private PizzaType(string type) : this(new TextOf(type)) { }
-        private PizzaType(IText type) => _type = type;
-
-        public string String() => _type.String();
     }
 }
