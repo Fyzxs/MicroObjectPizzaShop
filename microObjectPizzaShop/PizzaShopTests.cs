@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using microObjectPizzaShop;
 using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizza;
 using microObjectPizzaShop.Pizza.Description;
@@ -235,15 +236,5 @@ namespace MicroObjectPizzaShop
             //Assert
             actual.Should().Be(new Money(14.95));
         }
-    }
-
-    public class MediumPizza : Pizza
-    {
-        public MediumPizza() : this(new Toppings()) { }
-        public MediumPizza(IToppings toppings) : base(toppings) { }
-
-        protected override IPizzaType Type() => PizzaType.Medium;
-        protected override Money BasePrice() => new Money(13.00);
-        protected override IPizza NewPizza(IToppings toppings) => new MediumPizza(toppings);
     }
 }

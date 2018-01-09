@@ -70,6 +70,7 @@
     <Compile Include="Library\Texts\SentenceJoinText.cs" />
     <Compile Include="Library\Texts\IText.cs" />
     <Compile Include="Library\Texts\TextOf.cs" />
+    <Compile Include="MediumPizza.cs" />
     <Compile Include="PizzaShopTests.cs" />
     <Compile Include="Pizza\Description\Actions\IPizzaDescriptionAction.cs" />
     <Compile Include="Pizza\Description\Actions\NoToppingsPizzaDescriptionAction.cs" />
