@@ -250,13 +250,28 @@ namespace MicroObjectPizzaShop
             //Assert
             actual.Should().Be(new Money(8));
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldDisplayHalfCalzoneDescriptionWithNoToppings()
+        {
+            //Arrange
+            IPizza pizza = new HalfCalzone();
+            IDescription subject = pizza.Description();
+            TestWriteString testWriteString = new TestWriteString();
+
+            //Act
+            subject.Into(testWriteString);
+
+            //Assert
+            testWriteString.AssertValueIs("1/2 calzone");
+        }
     }
     public class HalfCalzone : Pizza
     {
         public HalfCalzone() : this(new Toppings()) { }
         public HalfCalzone(IToppings toppings) : base(toppings) { }
 
-        protected override IPizzaType Type() => throw new NotImplementedException();
+        protected override IPizzaType Type() => PizzaType.HalfCalzone;
         protected override Money BasePrice() => new Money(8);
         protected override IPizza NewPizza(IToppings toppings) => throw new NotImplementedException();
     }

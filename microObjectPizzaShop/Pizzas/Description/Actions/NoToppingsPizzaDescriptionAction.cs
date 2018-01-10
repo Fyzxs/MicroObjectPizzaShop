@@ -1,12 +1,12 @@
 ﻿using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizzas.Toppers;
-using MicroObjectPizzaShop;
 using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizzas.Description.Actions {
+namespace microObjectPizzaShop.Pizzas.Description.Actions
+{
     public class NoToppingsPizzaDescriptionAction : IPizzaDescriptionAction
     {
-        private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");
+        private static readonly IText NoToppingsFormat = new TextOf("{0}");
         private readonly IPizzaDescriptionAction _nextAction;
         private readonly IText _text;
 

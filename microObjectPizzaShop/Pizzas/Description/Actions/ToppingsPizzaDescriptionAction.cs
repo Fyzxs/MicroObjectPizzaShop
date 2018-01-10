@@ -3,10 +3,11 @@ using microObjectPizzaShop.Library.Texts;
 using microObjectPizzaShop.Pizzas.Toppers;
 using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizzas.Description.Actions {
+namespace microObjectPizzaShop.Pizzas.Description.Actions
+{
     public class ToppingsPizzaDescriptionAction : IPizzaDescriptionAction
     {
-        private static readonly IText MultipleToppingsFormat = new TextOf("{0} pizza with {1}");
+        private static readonly IText MultipleToppingsFormat = new TextOf("{0} with {1}");
         private readonly IPizzaDescriptionAction _nextAction;
         private readonly IDelayedFormatText _formatText;
 
