@@ -1,9 +1,9 @@
 ﻿using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Library.Texts;
-using microObjectPizzaShop.Pizza.Toppers;
+using microObjectPizzaShop.Pizzas.Toppers;
 using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizza.Description.Actions {
+namespace microObjectPizzaShop.Pizzas.Description.Actions {
     public class ToppingsPizzaDescriptionAction : IPizzaDescriptionAction
     {
         private static readonly IText MultipleToppingsFormat = new TextOf("{0} pizza with {1}");

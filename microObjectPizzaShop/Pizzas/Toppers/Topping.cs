@@ -1,7 +1,7 @@
 ﻿using microObjectPizzaShop.Library;
 using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizza.Toppers
+namespace microObjectPizzaShop.Pizzas.Toppers
 {
     public abstract class Topping : ITopping
     {

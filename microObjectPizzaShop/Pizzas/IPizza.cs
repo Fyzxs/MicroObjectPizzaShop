@@ -1,8 +1,8 @@
 ﻿using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizza.Description;
-using microObjectPizzaShop.Pizza.Toppers;
+using microObjectPizzaShop.Pizzas.Description;
+using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop.Pizza {
+namespace microObjectPizzaShop.Pizzas {
     public interface IPizza
     {
         IDescription Description();

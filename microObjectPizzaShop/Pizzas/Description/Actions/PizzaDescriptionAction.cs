@@ -1,8 +1,8 @@
 ﻿using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizza.Toppers;
+using microObjectPizzaShop.Pizzas.Toppers;
 using MicroObjectPizzaShop;
 
-namespace microObjectPizzaShop.Pizza.Description.Actions {
+namespace microObjectPizzaShop.Pizzas.Description.Actions {
     public class PizzaDescriptionAction : IPizzaDescriptionAction
     {
         private readonly IPizzaDescriptionAction _nextAction;

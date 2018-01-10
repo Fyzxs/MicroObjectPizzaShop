@@ -2,7 +2,7 @@
 using MicroObjectPizzaShop.Library.Texts;
 using System.Collections.Generic;
 
-namespace microObjectPizzaShop.Pizza.Toppers
+namespace microObjectPizzaShop.Pizzas.Toppers
 {
     public class SentenceJoinToppings : IText
     {

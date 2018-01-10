@@ -1,10 +1,11 @@
 ﻿using FluentAssertions;
 using microObjectPizzaShop;
 using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizza;
-using microObjectPizzaShop.Pizza.Description;
-using microObjectPizzaShop.Pizza.Toppers;
+using microObjectPizzaShop.Pizzas;
+using microObjectPizzaShop.Pizzas.Description;
+using microObjectPizzaShop.Pizzas.Toppers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace MicroObjectPizzaShop
 {
@@ -236,5 +237,27 @@ namespace MicroObjectPizzaShop
             //Assert
             actual.Should().Be(new Money(14.95));
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveHalfCalzonePrice()
+        {
+            //Arrange
+            IPizza subject = new HalfCalzone();
+
+            //Act
+            Money actual = subject.Price();
+
+            //Assert
+            actual.Should().Be(new Money(8));
+        }
+    }
+    public class HalfCalzone : Pizza
+    {
+        public HalfCalzone() : this(new Toppings()) { }
+        public HalfCalzone(IToppings toppings) : base(toppings) { }
+
+        protected override IPizzaType Type() => throw new NotImplementedException();
+        protected override Money BasePrice() => new Money(8);
+        protected override IPizza NewPizza(IToppings toppings) => throw new NotImplementedException();
     }
 }

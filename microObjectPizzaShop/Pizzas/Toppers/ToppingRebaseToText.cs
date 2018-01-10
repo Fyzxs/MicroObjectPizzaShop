@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizza.Toppers {
+namespace microObjectPizzaShop.Pizzas.Toppers {
     public class ToppingRebaseToText : IEnumerable<IText>
     {
         private readonly IToppings _toppings;

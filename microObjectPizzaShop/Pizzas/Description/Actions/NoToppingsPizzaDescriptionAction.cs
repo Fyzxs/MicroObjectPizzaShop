@@ -1,9 +1,9 @@
 ﻿using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizza.Toppers;
+using microObjectPizzaShop.Pizzas.Toppers;
 using MicroObjectPizzaShop;
 using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizza.Description.Actions {
+namespace microObjectPizzaShop.Pizzas.Description.Actions {
     public class NoToppingsPizzaDescriptionAction : IPizzaDescriptionAction
     {
         private static readonly IText NoToppingsFormat = new TextOf("{0} pizza");

@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace microObjectPizzaShop.Pizza.Toppers
+namespace microObjectPizzaShop.Pizzas.Toppers
 {
     public class Toppings : IToppings
     {

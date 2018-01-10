@@ -1,5 +1,5 @@
 ﻿using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizza {
+namespace microObjectPizzaShop.Pizzas {
     public interface IPizzaType : IText { }
 }

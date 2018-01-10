@@ -1,7 +1,7 @@
 ﻿using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizza.Toppers;
+using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop.Pizza.Description.Actions {
+namespace microObjectPizzaShop.Pizzas.Description.Actions {
     public interface IPizzaDescriptionAction
     {
         void Act(IWriteString item, IToppings toppings);
