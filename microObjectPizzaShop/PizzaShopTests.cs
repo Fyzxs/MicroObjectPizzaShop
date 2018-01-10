@@ -281,6 +281,47 @@ namespace MicroObjectPizzaShop
             actual.Should().Be(new Money(8.80));
         }
 
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveFullCalzonePrice()
+        {
+            //Arrange
+            IPizza subject = new FullCalzone();
+
+            //Act
+            Money actual = subject.Price();
+
+            //Assert
+            actual.Should().Be(new Money(14));
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldDisplayFullCalzoneDescriptionWithNoToppings()
+        {
+            //Arrange
+            IPizza pizza = new FullCalzone();
+            IDescription subject = pizza.Description();
+            TestWriteString testWriteString = new TestWriteString();
+
+            //Act
+            subject.Into(testWriteString);
+
+            //Assert
+            testWriteString.AssertValueIs("Full calzone");
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldHaveFullCalzonePriceWithTopping()
+        {
+            //Arrange
+            IPizza initial = new FullCalzone();
+            IPizza subject = initial.AddTopping(Topping.Mozzarella);
+
+            //Act
+            Money actual = subject.Price();
+
+            //Assert
+            actual.Should().Be(new Money(15.40));
+        }
     }
 
     public class HalfCalzone : Pizza
@@ -291,5 +332,15 @@ namespace MicroObjectPizzaShop
         protected override IPizzaType Type() => PizzaType.HalfCalzone;
         protected override Money BasePrice() => new Money(8);
         protected override IPizza NewPizza(IToppings toppings) => new HalfCalzone(toppings);
+    }
+
+    public class FullCalzone : Pizza
+    {
+        public FullCalzone() : this(new Toppings()) { }
+        public FullCalzone(IToppings toppings) : base(toppings) { }
+
+        protected override IPizzaType Type() => PizzaType.FullCalzone;
+        protected override Money BasePrice() => new Money(14);
+        protected override IPizza NewPizza(IToppings toppings) => new FullCalzone(toppings);
     }
 }
