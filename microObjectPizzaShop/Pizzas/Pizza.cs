@@ -2,7 +2,8 @@
 using microObjectPizzaShop.Pizzas.Description;
 using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop.Pizzas {
+namespace microObjectPizzaShop.Pizzas
+{
     public abstract class Pizza : IPizza
     {
         private readonly IToppings _toppings;
@@ -12,6 +13,7 @@ namespace microObjectPizzaShop.Pizzas {
         public IDescription Description() => new PizzaDescription(Type(), _toppings);
 
         public IPizza AddTopping(ITopping topping) => NewPizza(_toppings.Add(topping));
+        public IPizza RemoveTopping(ITopping topping) => NewPizza(_toppings.Remove(topping));
 
         public Money Price() => BasePrice() + _toppings.Cost(BasePrice());
 

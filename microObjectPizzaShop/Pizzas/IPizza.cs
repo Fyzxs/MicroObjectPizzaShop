@@ -2,11 +2,13 @@
 using microObjectPizzaShop.Pizzas.Description;
 using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop.Pizzas {
+namespace microObjectPizzaShop.Pizzas
+{
     public interface IPizza
     {
         IDescription Description();
         Money Price();
         IPizza AddTopping(ITopping topping);
+        IPizza RemoveTopping(ITopping topping);
     }
 }

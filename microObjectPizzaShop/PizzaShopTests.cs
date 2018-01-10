@@ -322,5 +322,24 @@ namespace MicroObjectPizzaShop
             //Assert
             actual.Should().Be(new Money(15.40));
         }
+
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldProvidePriceAfterRemovedTopping()
+        {
+            //Arrange
+            IPizza initial = new PersonalPizza();
+            IPizza subject = initial
+                .AddTopping(Topping.Bacon)
+                .AddTopping(Topping.Mushroom)
+                .RemoveTopping(Topping.Bacon);
+
+            //Act
+            Money actual = subject.Price();
+
+            //Assert
+            actual.Should().Be(new Money(9.90));
+        }
+
     }
 }

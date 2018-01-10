@@ -37,6 +37,5 @@ namespace microObjectPizzaShop
             removed.Cost(new Money(10)).Should().Be(new Money(1));
             multiple.Cost(new Money(10)).Should().Be(new Money(2));
         }
-
     }
 }
