@@ -1,9 +1,8 @@
 ﻿using microObjectPizzaShop.Library;
-using microObjectPizzaShop.Pizzas;
 using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop {
-    public class MediumPizza : Pizzas.Pizza
+namespace microObjectPizzaShop.Pizzas {
+    public class MediumPizza : Pizza
     {
         public MediumPizza() : this(new Toppings()) { }
         public MediumPizza(IToppings toppings) : base(toppings) { }

@@ -17,26 +17,20 @@ namespace microObjectPizzaShop.Pizzas.Toppers
         public Money Cost(Money basePrice) => _toppings.Aggregate(new Money(0), (m, t) => m + t.Cost(basePrice));
 
         public bool Empty() => !_toppings.Any();
-        public IToppings Add(ITopping topping)
+        public IToppings Add(ITopping topping) => new Toppings(new List<ITopping>(_toppings) { topping });
+
+        public IToppings Remove(ITopping topping)
         {
-            List<ITopping> toppings = new List<ITopping>();
-            toppings.AddRange(_toppings);
-            toppings.Add(topping);
+            List<ITopping> toppings = new List<ITopping>(_toppings);
+            toppings.Remove(topping);
             return new Toppings(toppings);
         }
 
         public IText Joined() => new SentenceJoinToppings(this);
 
         public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public IToppings Remove(ITopping topping)
-        {
-            List<ITopping> toppings = new List<ITopping>();
-            toppings.AddRange(_toppings);
-            toppings.Remove(topping);
-            return new Toppings(toppings);
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
     public interface IToppings : IEnumerable<ITopping>
     {
