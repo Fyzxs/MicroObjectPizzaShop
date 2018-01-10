@@ -77,6 +77,8 @@
     <Compile Include="Pizzas\Description\PizzaDescription.cs" />
     <Compile Include="Pizzas\Description\Actions\PizzaDescriptionAction.cs" />
     <Compile Include="Pizzas\Description\Actions\ToppingsPizzaDescriptionAction.cs" />
+    <Compile Include="Pizzas\FullCalzone.cs" />
+    <Compile Include="Pizzas\HalfCalzone.cs" />
     <Compile Include="Pizzas\LargePizza.cs" />
     <Compile Include="Pizzas\IPizza.cs" />
     <Compile Include="Pizzas\IPizzaType.cs" />
