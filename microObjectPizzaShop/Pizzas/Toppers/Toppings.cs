@@ -32,10 +32,10 @@ namespace microObjectPizzaShop.Pizzas.Toppers
 
         public IToppings Remove(ITopping topping)
         {
-            //List<ITopping> toppings = new List<ITopping>();
-            //toppings.AddRange(_toppings);
-            _toppings.Remove(topping);
-            return new Toppings(_toppings);
+            List<ITopping> toppings = new List<ITopping>();
+            toppings.AddRange(_toppings);
+            toppings.Remove(topping);
+            return new Toppings(toppings);
         }
     }
     public interface IToppings : IEnumerable<ITopping>
@@ -44,5 +44,6 @@ namespace microObjectPizzaShop.Pizzas.Toppers
         bool Empty();
         IToppings Add(ITopping topping);
         IText Joined();
+        IToppings Remove(ITopping topping);
     }
 }
