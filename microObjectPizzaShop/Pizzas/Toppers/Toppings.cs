@@ -29,6 +29,14 @@ namespace microObjectPizzaShop.Pizzas.Toppers
 
         public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IToppings Remove(ITopping topping)
+        {
+            //List<ITopping> toppings = new List<ITopping>();
+            //toppings.AddRange(_toppings);
+            _toppings.Remove(topping);
+            return new Toppings(_toppings);
+        }
     }
     public interface IToppings : IEnumerable<ITopping>
     {

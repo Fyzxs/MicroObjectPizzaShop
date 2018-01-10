@@ -91,6 +91,7 @@
     <Compile Include="Pizzas\Toppers\Toppings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestWriteString.cs" />
+    <Compile Include="ToppingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
