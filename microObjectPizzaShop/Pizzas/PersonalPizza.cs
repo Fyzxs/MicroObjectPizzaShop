@@ -10,6 +10,5 @@ namespace microObjectPizzaShop.Pizzas
 
         protected override IPizzaType Type() => PizzaType.Personal;
         protected override Money BasePrice() => new Money(9);
-        protected override IPizza NewPizza(IToppings toppings) => new PersonalPizza(toppings);
     }
 }

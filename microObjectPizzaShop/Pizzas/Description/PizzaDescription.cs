@@ -1,25 +1,24 @@
 ﻿using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizzas.Description.Actions;
 using microObjectPizzaShop.Pizzas.Toppers;
-using MicroObjectPizzaShop;
 
 namespace microObjectPizzaShop.Pizzas.Description
 {
     public class PizzaDescription : IDescription
     {
-        private readonly IPizzaDescriptionAction _pizzaDescriptionAction;
+        private readonly IProductDescriptionAction _productDescriptionAction;
         private readonly IToppings _toppings;
 
-        public PizzaDescription(IPizzaType type, IToppings toppings) :
-            this(new PizzaDescriptionAction(type), toppings)
+        public PizzaDescription(IProductType type, IToppings toppings) :
+            this(new ProductDescriptionAction(type), toppings)
         { }
-        public PizzaDescription(IPizzaDescriptionAction pizzaDescriptionAction, IToppings toppings)
+        public PizzaDescription(IProductDescriptionAction productDescriptionAction, IToppings toppings)
         {
-            _pizzaDescriptionAction = pizzaDescriptionAction;
+            _productDescriptionAction = productDescriptionAction;
             _toppings = toppings;
         }
 
-        public void Into(IWriteString item) => _pizzaDescriptionAction.Act(item, _toppings);
+        public void Into(IWriteString item) => _productDescriptionAction.Act(item, _toppings);
     }
     public interface IDescription
     {

@@ -1,7 +1,8 @@
 ﻿using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop.Pizzas {
+namespace microObjectPizzaShop.Pizzas
+{
     public class MediumPizza : Pizza
     {
         public MediumPizza() : this(new Toppings()) { }
@@ -9,6 +10,5 @@ namespace microObjectPizzaShop.Pizzas {
 
         protected override IPizzaType Type() => PizzaType.Medium;
         protected override Money BasePrice() => new Money(13.00);
-        protected override IPizza NewPizza(IToppings toppings) => new MediumPizza(toppings);
     }
 }

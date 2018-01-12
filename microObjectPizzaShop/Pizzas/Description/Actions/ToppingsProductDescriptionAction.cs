@@ -5,17 +5,17 @@ using MicroObjectPizzaShop.Library.Texts;
 
 namespace microObjectPizzaShop.Pizzas.Description.Actions
 {
-    public class ToppingsPizzaDescriptionAction : IPizzaDescriptionAction
+    public class ToppingsProductDescriptionAction : IProductDescriptionAction
     {
         private static readonly IText MultipleToppingsFormat = new TextOf("{0} with {1}");
-        private readonly IPizzaDescriptionAction _nextAction;
+        private readonly IProductDescriptionAction _nextAction;
         private readonly IDelayedFormatText _formatText;
 
-        public ToppingsPizzaDescriptionAction(IText type, IPizzaDescriptionAction nextAction) :
+        public ToppingsProductDescriptionAction(IText type, IProductDescriptionAction nextAction) :
             this(new DelayedFormatText(MultipleToppingsFormat, type), nextAction)
         { }
 
-        public ToppingsPizzaDescriptionAction(IDelayedFormatText formatText, IPizzaDescriptionAction nextAction)
+        public ToppingsProductDescriptionAction(IDelayedFormatText formatText, IProductDescriptionAction nextAction)
         {
             _formatText = formatText;
             _nextAction = nextAction;

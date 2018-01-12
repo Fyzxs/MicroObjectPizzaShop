@@ -14,7 +14,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza pizza = new PersonalPizza();
+            IPizza pizza = PizzaType.Personal.Create();
             IDescription actual = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -29,7 +29,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayDescriptionWithTopping()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza pizza = initial.AddTopping(Topping.Mozzarella);
             IDescription actual = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
@@ -45,7 +45,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceWithNoTopping()
         {
             //Arrange
-            IPizza subject = new PersonalPizza();
+            IPizza subject = PizzaType.Personal.Create();
 
             //Act
             Money actual = subject.Price();
@@ -58,7 +58,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceWithTopping()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza subject = initial.AddTopping(Topping.Mozzarella);
 
             //Act
@@ -73,7 +73,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceWithMultipleToppings()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza subject = initial
                 .AddTopping(Topping.Mushroom)
                 .AddTopping(Topping.Mozzarella);
@@ -90,7 +90,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvideDescriptionWithTwoToppings()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza pizza = initial
                 .AddTopping(Topping.Mushroom)
                 .AddTopping(Topping.Mozzarella);
@@ -108,7 +108,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvideDescriptionWithThreeToppings()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza pizza = initial
                 .AddTopping(Topping.Mushroom)
                 .AddTopping(Topping.Olive)
@@ -127,7 +127,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceForMeatAndNonMeatTopping()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza subject = initial
                 .AddTopping(Topping.Bacon)
                 .AddTopping(Topping.Mushroom);
@@ -143,7 +143,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveLargePizzaPriceWithNoTopping()
         {
             //Arrange
-            IPizza subject = new LargePizza();
+            IPizza subject = PizzaType.Large.Create();
 
             //Act
             Money actual = subject.Price();
@@ -156,7 +156,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveLargePriceWithTopping()
         {
             //Arrange
-            IPizza initial = new LargePizza();
+            IPizza initial = PizzaType.Large.Create();
             IPizza subject = initial.AddTopping(Topping.Bacon);
 
             //Act
@@ -185,7 +185,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveImmutableToppings()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza second = initial.AddTopping(Topping.Mushroom);
 
             //Act
@@ -200,7 +200,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayMediumDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza pizza = new MediumPizza();
+            IPizza pizza = PizzaType.Medium.Create();
             IDescription subject = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -228,7 +228,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveMediumPriceWithTopping()
         {
             //Arrange
-            IPizza initial = new MediumPizza();
+            IPizza initial = PizzaType.Medium.Create();
             IPizza subject = initial.AddTopping(Topping.Bacon);
 
             //Act
@@ -242,7 +242,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveHalfCalzonePrice()
         {
             //Arrange
-            IPizza subject = new HalfCalzone();
+            ICalzone subject = CalzoneType.HalfCalzone.Create();
 
             //Act
             Money actual = subject.Price();
@@ -255,7 +255,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayHalfCalzoneDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza pizza = new HalfCalzone();
+            ICalzone pizza = CalzoneType.HalfCalzone.Create();
             IDescription subject = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -270,8 +270,8 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveHalfCalzonePriceWithTopping()
         {
             //Arrange
-            IPizza initial = new HalfCalzone();
-            IPizza subject = initial.AddTopping(Topping.Mozzarella);
+            ICalzone initial = CalzoneType.HalfCalzone.Create();
+            ICalzone subject = initial.AddTopping(Topping.Mozzarella);
 
             //Act
             Money actual = subject.Price();
@@ -284,7 +284,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveFullCalzonePrice()
         {
             //Arrange
-            IPizza subject = new FullCalzone();
+            ICalzone subject = CalzoneType.FullCalzone.Create();
 
             //Act
             Money actual = subject.Price();
@@ -297,7 +297,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayFullCalzoneDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza pizza = new FullCalzone();
+            ICalzone pizza = CalzoneType.FullCalzone.Create();
             IDescription subject = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -312,8 +312,8 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveFullCalzonePriceWithTopping()
         {
             //Arrange
-            IPizza initial = new FullCalzone();
-            IPizza subject = initial.AddTopping(Topping.Mozzarella);
+            ICalzone initial = CalzoneType.FullCalzone.Create();
+            ICalzone subject = initial.AddTopping(Topping.Mozzarella);
 
             //Act
             Money actual = subject.Price();
@@ -327,7 +327,7 @@ namespace MicroObjectPizzaShop
         public void ShouldProvidePriceAfterRemovedTopping()
         {
             //Arrange
-            IPizza initial = new PersonalPizza();
+            IPizza initial = PizzaType.Personal.Create();
             IPizza subject = initial
                 .AddTopping(Topping.Bacon)
                 .AddTopping(Topping.Mushroom)
@@ -344,10 +344,10 @@ namespace MicroObjectPizzaShop
         public void ShouldResizeFromPersonalToMedium()
         {
             //Arrange
-            IPizza subject = new PersonalPizza();
+            IPizza subject = PizzaType.Personal.Create();
 
             //Act
-            IPizza actual = subject.AsMedium();
+            IPizza actual = subject.As(PizzaType.Medium);
 
             //Assert
             actual.Should().BeOfType<MediumPizza>();
@@ -357,8 +357,8 @@ namespace MicroObjectPizzaShop
         public void ShouldMaintainToppingsAfterResizeFromPersonalToMedium()
         {
             //Arrange
-            IPizza initial = new PersonalPizza().AddTopping(Topping.Mushroom);
-            IPizza subject = initial.AsMedium();
+            IPizza initial = PizzaType.Personal.Create().AddTopping(Topping.Mushroom);
+            IPizza subject = initial.As(PizzaType.Medium);
             TestWriteString testWriteString = new TestWriteString();
             IDescription actual = subject.Description();
             //Act

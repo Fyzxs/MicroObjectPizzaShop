@@ -4,16 +4,16 @@ using MicroObjectPizzaShop.Library.Texts;
 
 namespace microObjectPizzaShop.Pizzas.Description.Actions
 {
-    public class NoToppingsPizzaDescriptionAction : IPizzaDescriptionAction
+    public class NoToppingsProductDescriptionAction : IProductDescriptionAction
     {
         private static readonly IText NoToppingsFormat = new TextOf("{0}");
-        private readonly IPizzaDescriptionAction _nextAction;
+        private readonly IProductDescriptionAction _nextAction;
         private readonly IText _text;
 
-        public NoToppingsPizzaDescriptionAction(IPizzaType type, IPizzaDescriptionAction nextAction) :
+        public NoToppingsProductDescriptionAction(IProductType type, IProductDescriptionAction nextAction) :
             this(new FormatText(NoToppingsFormat, type), nextAction)
         { }
-        public NoToppingsPizzaDescriptionAction(IText text, IPizzaDescriptionAction nextAction)
+        public NoToppingsProductDescriptionAction(IText text, IProductDescriptionAction nextAction)
         {
             _nextAction = nextAction;
             _text = text;
