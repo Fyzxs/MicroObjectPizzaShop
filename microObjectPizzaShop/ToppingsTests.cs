@@ -37,5 +37,21 @@ namespace microObjectPizzaShop
             removed.Cost(new Money(10)).Should().Be(new Money(1));
             multiple.Cost(new Money(10)).Should().Be(new Money(2));
         }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldCopy()
+        {
+            //Arrange
+            Toppings initial = new Toppings();
+            IToppings multiple = initial.Add(Topping.Mushroom).Add(Topping.Mozzarella);
+            IToppings clone = multiple.Copy();
+
+            //Act
+            IToppings removed = multiple.Remove(Topping.Mushroom);
+
+            //Assert
+            removed.Cost(new Money(10)).Should().Be(new Money(1));
+            clone.Cost(new Money(10)).Should().Be(new Money(2));
+        }
     }
 }

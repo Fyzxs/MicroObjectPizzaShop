@@ -26,6 +26,8 @@ namespace microObjectPizzaShop.Pizzas.Toppers
             return new Toppings(toppings);
         }
 
+        public IToppings Copy() => new Toppings(new List<ITopping>(_toppings));
+
         public IText Joined() => new SentenceJoinToppings(this);
 
         public IEnumerator<ITopping> GetEnumerator() => _toppings.GetEnumerator();
@@ -39,5 +41,6 @@ namespace microObjectPizzaShop.Pizzas.Toppers
         IToppings Add(ITopping topping);
         IText Joined();
         IToppings Remove(ITopping topping);
+        IToppings Copy();
     }
 }
