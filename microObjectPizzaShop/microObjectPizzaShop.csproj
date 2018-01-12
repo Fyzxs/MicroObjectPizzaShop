@@ -92,6 +92,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestWriteString.cs" />
     <Compile Include="ToppingsTests.cs" />
+    <Compile Include="ToppingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
