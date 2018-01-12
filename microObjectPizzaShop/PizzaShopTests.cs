@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using microObjectPizzaShop;
 using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizzas;
 using microObjectPizzaShop.Pizzas.Description;
@@ -339,6 +338,19 @@ namespace MicroObjectPizzaShop
 
             //Assert
             actual.Should().Be(new Money(9.90));
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldResizeFromPersonalToMedium()
+        {
+            //Arrange
+            IPizza subject = new PersonalPizza();
+
+            //Act
+            IPizza actual = subject.AsMedium();
+
+            //Assert
+            actual.Should().BeOfType<MediumPizza>();
         }
 
     }
