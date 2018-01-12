@@ -71,13 +71,14 @@
     <Compile Include="Library\Texts\IText.cs" />
     <Compile Include="Library\Texts\TextOf.cs" />
     <Compile Include="PizzaShopTests.cs" />
+    <Compile Include="Pizzas\Calzone.cs" />
+    <Compile Include="Pizzas\CalzoneType.cs" />
     <Compile Include="Pizzas\Description\Actions\IProductDescriptionAction.cs" />
     <Compile Include="Pizzas\Description\Actions\NoToppingsProductDescriptionAction.cs" />
     <Compile Include="Pizzas\Description\PizzaDescription.cs" />
     <Compile Include="Pizzas\Description\Actions\ProductDescriptionAction.cs" />
     <Compile Include="Pizzas\Description\Actions\ToppingsProductDescriptionAction.cs" />
-    <Compile Include="Pizzas\IPizza.cs" />
-    <Compile Include="Pizzas\IPizzaType.cs" />
+    <Compile Include="Pizzas\IProductType.cs" />
     <Compile Include="Pizzas\Pizza.cs" />
     <Compile Include="Pizzas\PizzaType.cs" />
     <Compile Include="Pizzas\Toppers\SentenceJoinToppings.cs" />
