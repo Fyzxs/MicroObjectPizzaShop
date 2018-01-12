@@ -29,7 +29,7 @@ namespace microObjectPizzaShop
         public void ShouldBeRoastedGarlic()
         {
             //Arrange
-            IPizza subject = new MediumPizza().AddTopping(Topping.RoastedGarlic);
+            IPizza subject = PizzaType.Medium.Create().AddTopping(Topping.RoastedGarlic);
 
             //Act
             IDescription actual = subject.Description();
@@ -57,7 +57,7 @@ namespace microObjectPizzaShop
         public void ShouldBeSunDriedTomato()
         {
             //Arrange
-            IPizza subject = new MediumPizza().AddTopping(Topping.SunDriedTomato);
+            IPizza subject = PizzaType.Medium.Create().AddTopping(Topping.SunDriedTomato);
 
             //Act
             IDescription actual = subject.Description();
@@ -85,7 +85,7 @@ namespace microObjectPizzaShop
         public void ShouldBeFetaCheese()
         {
             //Arrange
-            IPizza subject = new MediumPizza().AddTopping(Topping.FetaCheese);
+            IPizza subject = PizzaType.Medium.Create().AddTopping(Topping.FetaCheese);
 
             //Act
             IDescription actual = subject.Description();

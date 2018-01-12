@@ -170,7 +170,7 @@ namespace MicroObjectPizzaShop
         public void ShouldDisplayLargeDescriptionWithNoToppings()
         {
             //Arrange
-            IPizza pizza = new LargePizza();
+            IPizza pizza = PizzaType.Large.Create();
             IDescription subject = pizza.Description();
             TestWriteString testWriteString = new TestWriteString();
 
@@ -215,7 +215,7 @@ namespace MicroObjectPizzaShop
         public void ShouldHaveMediumPizzaPriceWithNoTopping()
         {
             //Arrange
-            IPizza subject = new MediumPizza();
+            IPizza subject = PizzaType.Medium.Create();
 
             //Act
             Money actual = subject.Price();
@@ -341,19 +341,6 @@ namespace MicroObjectPizzaShop
         }
 
         [TestMethod, TestCategory("unit")]
-        public void ShouldResizeFromPersonalToMedium()
-        {
-            //Arrange
-            IPizza subject = PizzaType.Personal.Create();
-
-            //Act
-            IPizza actual = subject.As(PizzaType.Medium);
-
-            //Assert
-            actual.Should().BeOfType<MediumPizza>();
-        }
-
-        [TestMethod, TestCategory("unit")]
         public void ShouldMaintainToppingsAfterResizeFromPersonalToMedium()
         {
             //Arrange
@@ -366,6 +353,21 @@ namespace MicroObjectPizzaShop
 
             //Assert
             testWriteString.AssertValueIs("Medium pizza with Mushroom");
+        }
+
+        [TestMethod, TestCategory("unit")]
+        public void ShouldMaintainToppingsAfterResizeFromHalfToFull()
+        {
+            //Arrange
+            ICalzone initial = CalzoneType.HalfCalzone.Create().AddTopping(Topping.Mushroom);
+            ICalzone subject = initial.As(CalzoneType.FullCalzone);
+            TestWriteString testWriteString = new TestWriteString();
+            IDescription actual = subject.Description();
+            //Act
+            actual.Into(testWriteString);
+
+            //Assert
+            testWriteString.AssertValueIs("Full calzone with Mushroom");
         }
 
     }

@@ -76,13 +76,8 @@
     <Compile Include="Pizzas\Description\PizzaDescription.cs" />
     <Compile Include="Pizzas\Description\Actions\ProductDescriptionAction.cs" />
     <Compile Include="Pizzas\Description\Actions\ToppingsProductDescriptionAction.cs" />
-    <Compile Include="Pizzas\FullCalzone.cs" />
-    <Compile Include="Pizzas\HalfCalzone.cs" />
-    <Compile Include="Pizzas\LargePizza.cs" />
     <Compile Include="Pizzas\IPizza.cs" />
     <Compile Include="Pizzas\IPizzaType.cs" />
-    <Compile Include="Pizzas\MediumPizza.cs" />
-    <Compile Include="Pizzas\PersonalPizza.cs" />
     <Compile Include="Pizzas\Pizza.cs" />
     <Compile Include="Pizzas\PizzaType.cs" />
     <Compile Include="Pizzas\Toppers\SentenceJoinToppings.cs" />
