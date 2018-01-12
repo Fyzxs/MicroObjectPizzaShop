@@ -7,8 +7,8 @@ namespace microObjectPizzaShop.Pizzas.Toppers
     {
         private const double RegularPercentage = .1;
         private const double MeatPercentage = .15;
-        private const double PremiumPercentage = 32;
-        public static readonly ITopping Mushroom = new Topping("Mushroom", RegularPercentage;
+        private const double PremiumPercentage = .32;
+        public static readonly ITopping Mushroom = new Topping("Mushroom", RegularPercentage);
         public static readonly ITopping Mozzarella = new Topping("Mozzarella", RegularPercentage);
         public static readonly ITopping Olive = new Topping("Olive", RegularPercentage);
         public static readonly ITopping Pepperoni = new Topping("Pepperoni", MeatPercentage);
