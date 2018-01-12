@@ -3,43 +3,32 @@ using MicroObjectPizzaShop.Library.Texts;
 
 namespace microObjectPizzaShop.Pizzas.Toppers
 {
-    public abstract class Topping : ITopping
+    public class Topping : ITopping
     {
-        public static readonly ITopping Mushroom = new RegularTopping("Mushroom");
-        public static readonly ITopping Mozzarella = new RegularTopping("Mozzarella");
-        public static readonly ITopping Olive = new RegularTopping("Olive");
-        public static readonly ITopping Pepperoni = new MeatTopping("Pepperoni");
-        public static readonly ITopping Bacon = new MeatTopping("Bacon");
-        public static readonly ITopping Ham = new MeatTopping("Ham");
-        public static readonly ITopping RoastedGarlic = new PremiumTopping("Roasted Garlic");
-        public static readonly ITopping SunDriedTomato = new PremiumTopping("Sun Dried Tomato");
-        public static readonly ITopping FetaCheese = new PremiumTopping("Feta Cheese");
+        private const double RegularPercentage = .1;
+        private const double MeatPercentage = .15;
+        private const double PremiumPercentage = 32;
+        public static readonly ITopping Mushroom = new Topping("Mushroom", RegularPercentage;
+        public static readonly ITopping Mozzarella = new Topping("Mozzarella", RegularPercentage);
+        public static readonly ITopping Olive = new Topping("Olive", RegularPercentage);
+        public static readonly ITopping Pepperoni = new Topping("Pepperoni", MeatPercentage);
+        public static readonly ITopping Bacon = new Topping("Bacon", MeatPercentage);
+        public static readonly ITopping Ham = new Topping("Ham", MeatPercentage);
+        public static readonly ITopping RoastedGarlic = new Topping("Roasted Garlic", PremiumPercentage);
+        public static readonly ITopping SunDriedTomato = new Topping("Sun Dried Tomato", PremiumPercentage);
+        public static readonly ITopping FetaCheese = new Topping("Feta Cheese", PremiumPercentage);
 
         private readonly string _name;
+        private readonly double _percentage;
 
-        protected Topping(string name) => _name = name;
+        private Topping(string name, double percentage)
+        {
+            _name = name;
+            _percentage = percentage;
+        }
 
-        public Money Cost(Money pizzaCost) => pizzaCost % PercentCost();
+        public Money Cost(Money pizzaCost) => pizzaCost % _percentage;
         public IText Name() => new TextOf(_name);
-        protected abstract double PercentCost();
-
-        private class RegularTopping : Topping
-        {
-            public RegularTopping(string name) : base(name) { }
-            protected override double PercentCost() => .1;
-        }
-        private class MeatTopping : Topping
-        {
-            public MeatTopping(string name) : base(name) { }
-            protected override double PercentCost() => .15;
-        }
-
-        private class PremiumTopping : Topping
-        {
-            public PremiumTopping(string name) : base(name) { }
-
-            protected override double PercentCost() => .32;
-        }
     }
     public interface ITopping
     {
