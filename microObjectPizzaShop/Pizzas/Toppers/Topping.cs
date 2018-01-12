@@ -12,6 +12,8 @@ namespace microObjectPizzaShop.Pizzas.Toppers
         public static readonly ITopping Bacon = new MeatTopping("Bacon");
         public static readonly ITopping Ham = new MeatTopping("Ham");
         public static readonly ITopping RoastedGarlic = new PremiumTopping("Roasted Garlic");
+        public static readonly ITopping SunDriedTomato = new PremiumTopping("Sun Dried Tomato");
+        public static readonly ITopping FetaCheese = new PremiumTopping("Feta Cheese");
 
         private readonly string _name;
 
