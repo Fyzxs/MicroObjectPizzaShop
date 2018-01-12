@@ -11,6 +11,7 @@ namespace microObjectPizzaShop.Pizzas.Toppers
         public static readonly ITopping Pepperoni = new MeatTopping("Pepperoni");
         public static readonly ITopping Bacon = new MeatTopping("Bacon");
         public static readonly ITopping Ham = new MeatTopping("Ham");
+        public static readonly ITopping RoastedGarlic = new PremiumTopping("Roasted Garlic");
 
         private readonly string _name;
 
@@ -29,6 +30,13 @@ namespace microObjectPizzaShop.Pizzas.Toppers
         {
             public MeatTopping(string name) : base(name) { }
             protected override double PercentCost() => .15;
+        }
+
+        private class PremiumTopping : Topping
+        {
+            public PremiumTopping(string name) : base(name) { }
+
+            protected override double PercentCost() => .32;
         }
     }
     public interface ITopping

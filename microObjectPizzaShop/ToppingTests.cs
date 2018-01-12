@@ -8,23 +8,12 @@ namespace microObjectPizzaShop
     [TestClass]
     public class ToppingTests
     {
-        [TestMethod, TestCategory("unit")]
-        public void ShouldHavePremiumTopping()
-        {
-            //Arrange
-            Topping premium = new PremiumTopping("name here");
-
-
-            //Act
-
-            //Assert
-        }
 
         [TestMethod, TestCategory("unit")]
         public void ShouldCalculateCostAs32Percent()
         {
             //Arrange
-            PremiumTopping subject = new PremiumTopping("blah");
+            ITopping subject = Topping.RoastedGarlic;
 
             //Act
             Money actual = subject.Cost(new Money(1));
@@ -34,13 +23,4 @@ namespace microObjectPizzaShop
         }
     }
 
-    public class PremiumTopping : Topping
-    {
-        public PremiumTopping(string nameHere) : base(nameHere) { }
-
-        protected override double PercentCost()
-        {
-            return .32;
-        }
-    }
 }
