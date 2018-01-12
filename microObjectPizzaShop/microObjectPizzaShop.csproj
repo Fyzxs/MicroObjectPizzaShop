@@ -70,7 +70,6 @@
     <Compile Include="Library\Texts\SentenceJoinText.cs" />
     <Compile Include="Library\Texts\IText.cs" />
     <Compile Include="Library\Texts\TextOf.cs" />
-    <Compile Include="MediumPizza.cs" />
     <Compile Include="PizzaShopTests.cs" />
     <Compile Include="Pizzas\Description\Actions\IPizzaDescriptionAction.cs" />
     <Compile Include="Pizzas\Description\Actions\NoToppingsPizzaDescriptionAction.cs" />
@@ -82,6 +81,7 @@
     <Compile Include="Pizzas\LargePizza.cs" />
     <Compile Include="Pizzas\IPizza.cs" />
     <Compile Include="Pizzas\IPizzaType.cs" />
+    <Compile Include="Pizzas\MediumPizza.cs" />
     <Compile Include="Pizzas\PersonalPizza.cs" />
     <Compile Include="Pizzas\Pizza.cs" />
     <Compile Include="Pizzas\PizzaType.cs" />
