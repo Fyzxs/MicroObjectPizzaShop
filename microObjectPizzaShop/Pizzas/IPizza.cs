@@ -10,6 +10,6 @@ namespace microObjectPizzaShop.Pizzas
         Money Price();
         IPizza AddTopping(ITopping topping);
         IPizza RemoveTopping(ITopping topping);
-        IPizza AsMedium();
+        IPizza As(IPizzaType pizzaType);
     }
 }

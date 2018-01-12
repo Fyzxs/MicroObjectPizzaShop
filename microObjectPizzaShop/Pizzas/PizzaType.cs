@@ -6,7 +6,7 @@ namespace microObjectPizzaShop.Pizzas
 {
     public class PizzaType : IPizzaType
     {
-        public static readonly IPizzaType Large = new PizzaType("Large pizza");
+        public static readonly IPizzaType Large = new LargePizzaType("Large pizza");
         public static readonly IPizzaType Medium = new MediumPizzaType("Medium pizza");
         public static readonly IPizzaType Personal = new PersonalPizzaType("Personal pizza");
         public static readonly IPizzaType HalfCalzone = new PizzaType("1/2 calzone");
@@ -30,7 +30,15 @@ namespace microObjectPizzaShop.Pizzas
         {
             public MediumPizzaType(string type) : base(type) { }
 
+            public override IPizza Create() => new MediumPizza();
             public override IPizza Create(IToppings toppings) => new MediumPizza(toppings);
+        }
+        private class LargePizzaType : PizzaType
+        {
+            public LargePizzaType(string type) : base(type) { }
+
+            public override IPizza Create() => new LargePizza();
+            public override IPizza Create(IToppings toppings) => new LargePizza(toppings);
         }
     }
 }
