@@ -1,5 +1,10 @@
-﻿using MicroObjectPizzaShop.Library.Texts;
+﻿using microObjectPizzaShop.Pizzas.Toppers;
+using MicroObjectPizzaShop.Library.Texts;
 
-namespace microObjectPizzaShop.Pizzas {
-    public interface IPizzaType : IText { }
+namespace microObjectPizzaShop.Pizzas
+{
+    public interface IPizzaType : IText
+    {
+        IPizza Create(IToppings copy);
+    }
 }

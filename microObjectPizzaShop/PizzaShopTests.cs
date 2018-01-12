@@ -353,5 +353,20 @@ namespace MicroObjectPizzaShop
             actual.Should().BeOfType<MediumPizza>();
         }
 
+        [TestMethod, TestCategory("unit")]
+        public void ShouldMaintainToppingsAfterResizeFromPersonalToMedium()
+        {
+            //Arrange
+            IPizza initial = new PersonalPizza().AddTopping(Topping.Mushroom);
+            IPizza subject = initial.AsMedium();
+            TestWriteString testWriteString = new TestWriteString();
+            IDescription actual = subject.Description();
+            //Act
+            actual.Into(testWriteString);
+
+            //Assert
+            testWriteString.AssertValueIs("Medium pizza with Mushroom");
+        }
+
     }
 }

@@ -25,7 +25,6 @@ namespace microObjectPizzaShop.Pizzas.Toppers
             toppings.Remove(topping);
             return new Toppings(toppings);
         }
-
         public IToppings Copy() => new Toppings(new List<ITopping>(_toppings));
 
         public IText Joined() => new SentenceJoinToppings(this);

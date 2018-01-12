@@ -1,7 +1,8 @@
 ﻿using microObjectPizzaShop.Library;
 using microObjectPizzaShop.Pizzas.Toppers;
 
-namespace microObjectPizzaShop.Pizzas {
+namespace microObjectPizzaShop.Pizzas
+{
     public class PersonalPizza : Pizza
     {
         public PersonalPizza() : this(new Toppings()) { }

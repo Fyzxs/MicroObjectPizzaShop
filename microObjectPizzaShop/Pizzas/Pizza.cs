@@ -15,6 +15,7 @@ namespace microObjectPizzaShop.Pizzas
         public IPizza AddTopping(ITopping topping) => NewPizza(_toppings.Add(topping));
         public IPizza RemoveTopping(ITopping topping) => NewPizza(_toppings.Remove(topping));
         public IPizza AsMedium() => new MediumPizza(_toppings.Copy());
+        public IPizza As(IPizzaType type) => type.Create(_toppings.Copy());
 
         public Money Price() => BasePrice() + _toppings.Cost(BasePrice());
 
